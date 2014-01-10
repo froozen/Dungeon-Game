@@ -6,8 +6,8 @@ public class Main {
 		GameFrame gameFrame = new GameFrame();
 		
 		while(true){
+			GameStateManager.computeNextFrame();
 			gameFrame.refresh();
-			
 			try {Thread.sleep(15);}
 			catch (InterruptedException e) {e.printStackTrace();}
 		}

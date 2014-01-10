@@ -10,4 +10,8 @@ public class TitleScreenState extends BaseState{
 		g.fillRect(0, 0, 800, 600);
 	}
 
+	public void computeNextFrame() {
+		System.out.println("Frame!");
+	}
+
 }

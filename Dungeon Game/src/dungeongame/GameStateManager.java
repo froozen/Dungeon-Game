@@ -19,4 +19,8 @@ public class GameStateManager {
 	public static void changeGameState(BaseState state){
 		currentGameState = state;
 	}
+	
+	public static void computeNextFrame(){
+		currentGameState.computeNextFrame();
+	}
 }
