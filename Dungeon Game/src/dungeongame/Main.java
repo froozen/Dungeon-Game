@@ -6,6 +6,7 @@ public class Main {
 		GameFrame gameFrame = new GameFrame();
 		
 		while(true){
+			GameInput.pushInputs();
 			GameStateManager.computeNextFrame();
 			gameFrame.refresh();
 			try {Thread.sleep(15);}

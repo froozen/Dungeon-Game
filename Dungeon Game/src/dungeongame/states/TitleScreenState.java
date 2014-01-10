@@ -3,6 +3,8 @@ package dungeongame.states;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import dungeongame.GameInput;
+
 public class TitleScreenState extends BaseState{
 
 	public void drawMe(Graphics g) {
@@ -11,7 +13,8 @@ public class TitleScreenState extends BaseState{
 	}
 
 	public void computeNextFrame() {
-		System.out.println("Frame!");
+		if(GameInput.wasLeftClicked)System.out.println("Left Click!");
+		if(GameInput.wasRightClicked)System.out.println("Right Click!");
 	}
 
 }

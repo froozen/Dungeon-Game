@@ -21,6 +21,9 @@ public class GameFrame extends JFrame{
 		gameCanvas = new Canvas();
 		gameCanvas.setBounds(0, 0, 800, 600);
 		
+		GameInput gameInput = new GameInput();
+		gameCanvas.addMouseListener(gameInput);
+		
 		add(gameCanvas);
 		setVisible(true);
 		
