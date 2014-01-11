@@ -23,6 +23,7 @@ public class GameFrame extends JFrame{
 		
 		GameInput gameInput = new GameInput();
 		gameCanvas.addMouseListener(gameInput);
+		gameCanvas.addKeyListener(gameInput);
 		
 		add(gameCanvas);
 		setVisible(true);
