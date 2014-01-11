@@ -7,18 +7,13 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 public class GameInput implements MouseListener , KeyListener{
-	public static boolean wasLeftClicked, wasRightClicked;
+	private static boolean wasLeftClicked, wasRightClicked;
 	private static boolean isLeftClicked, isRightClicked;
 	private static HashMap<String, Boolean> keyIsDown, keyWasDown, keyIsPressed, keyWasPressed;
 
 	static{
 		keyIsPressed = new HashMap<String, Boolean>();
 		keyIsDown = new HashMap<String, Boolean>();
-	}
-	
-	public void mouseReleased(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1)isLeftClicked = true;
-		else if(e.getButton() == MouseEvent.BUTTON3) isRightClicked = true;
 	}
 	
 	public static boolean wasKeyDown(String keyName){
@@ -31,6 +26,14 @@ public class GameInput implements MouseListener , KeyListener{
 		else return false;
 	}
 	
+	public static boolean wasLeftClicked(){
+		return wasLeftClicked;
+	}
+	
+	public static boolean wasRightClicked(){
+		return wasRightClicked;
+	}
+	
 	public static void pushInputs(){
 		//Push Mouse Input
 		wasLeftClicked = isLeftClicked;
@@ -41,6 +44,11 @@ public class GameInput implements MouseListener , KeyListener{
 		keyIsDown = new HashMap<String, Boolean>();
 		keyWasPressed = keyIsPressed;
 		keyIsPressed = new HashMap<String, Boolean>();
+	}
+	
+	public void mouseReleased(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON1)isLeftClicked = true;
+		else if(e.getButton() == MouseEvent.BUTTON3) isRightClicked = true;
 	}
 	
 	public void keyPressed(KeyEvent e) {	
