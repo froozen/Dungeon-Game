@@ -30,7 +30,8 @@ public class RessourceManager {
 
 			try {
 				File imageFile = new File(directoryPath + "res" + File.separator + imageLocations.get(imageName));
-				image = ImageIO.read(imageFile);
+				if(imageFile.isFile())image = ImageIO.read(imageFile);
+				else System.out.println("Error: Cannot find file: " + imageFile.getAbsolutePath());
 
 			} catch (IOException e) {e.printStackTrace();}
 
