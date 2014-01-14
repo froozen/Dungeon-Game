@@ -4,14 +4,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 public class RessourceManager {
+	public static final int tileSize = 32;
+	
 	private static String directoryPath;
 	private static HashMap <String, BufferedImage> images;
 	private static HashMap <String, String> imageLocations;
+	private static ArrayList<BufferedImage> tiles;
 
 	static{
 		images = new HashMap<String, BufferedImage>();
@@ -40,6 +44,38 @@ public class RessourceManager {
 		else{
 			System.out.println("Error: Cannot find path to '" + imageName + "' in imageLocations");
 			return null; 
+		}
+	}
+
+	public static BufferedImage getTile(int index){
+		if(tiles == null){
+			System.out.println("Error: No tileset loaded!");
+			return null;
+		}
+		else if(tiles.size() < index){
+			System.out.println("Error: Tile index out of range: " + index + " size: " + tiles.size());
+			return null;
+		}
+		else return tiles.get(index - 1);
+	}
+
+	public static void loadTileSet(String tileSetName){
+		try {
+			File tileFile = new File(directoryPath + File.separator + "res" + File.separator + "tiles" + File.separator + tileSetName + ".png");
+			if(tileFile.isFile()){
+				tiles = new ArrayList<BufferedImage>();
+				BufferedImage tileSetImage = ImageIO.read(tileFile);
+				
+				for(int y = 0; y < tileSetImage.getHeight() / tileSize; y++){
+					for(int x = 0; x < tileSetImage.getWidth() / tileSize; x++){
+						tiles.add(tileSetImage.getSubimage(x * tileSize, y * tileSize, tileSize, tileSize));
+					}
+				}
+			}
+			else System.out.println("Error: Cannot find file: " + tileFile.getAbsolutePath());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
