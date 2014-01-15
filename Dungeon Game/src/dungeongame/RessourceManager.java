@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import dungeongame.entitys.BaseEntity.Direction;
+
 public class RessourceManager {
 	public static final int tileSize = 32;
 	
@@ -22,6 +24,7 @@ public class RessourceManager {
 		imageLocations = new HashMap<String, String>();
 
 		imageLocations.put("misc.title", "misc" + File.separator + "title.png");
+		imageLocations.put("sprites.player", "sprites" + File.separator + "player.png");
 
 		directoryPath = determineDirectoryPath();
 		System.out.println("Loading files from: " + directoryPath);
@@ -77,6 +80,23 @@ public class RessourceManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static BufferedImage getCharacterSprite(String spriteName, Direction direction, int cyclePhase){
+		BufferedImage sprite = getImage(spriteName);
+		
+		int spriteWidth = sprite.getWidth() / 3;
+		int spriteHeight = sprite.getHeight() / 4;
+		
+		int directionNumber = 0;
+		if(direction == Direction.DOWN)directionNumber = 0;
+		else if(direction == Direction.RIGHT)directionNumber = 1;
+		else if(direction == Direction.UP)directionNumber = 2;
+		else if(direction == Direction.LEFT)directionNumber = 3;
+		
+		sprite = sprite.getSubimage(cyclePhase * spriteWidth, directionNumber * spriteHeight, spriteWidth, spriteHeight);
+		
+		return sprite;
 	}
 
 	private static String determineDirectoryPath(){
