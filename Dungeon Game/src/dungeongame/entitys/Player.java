@@ -13,7 +13,7 @@ public class Player extends BaseEntity{
 		this.position = position;
 		this.x = position.x;
 		this.y = position.y;
-		
+				
 		direction = Direction.DOWN;
 		cyclePhase = 0;
 		

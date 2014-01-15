@@ -17,7 +17,7 @@ public abstract class BaseEntity {
 	public int cyclePhase;
 	
 	public void drawMe(Graphics g){
-		g.drawImage(sprite, (int) (x * RessourceManager.tileSize - sprite.getWidth()), (int) (y * RessourceManager.tileSize - sprite.getHeight()), null);
+		g.drawImage(sprite, (int) (x * RessourceManager.tileSize - ((sprite.getWidth() - RessourceManager.tileSize) / 2)), (int) ((y + 1) * RessourceManager.tileSize - sprite.getHeight()), null);
 	}
 	
 	public enum Direction{
