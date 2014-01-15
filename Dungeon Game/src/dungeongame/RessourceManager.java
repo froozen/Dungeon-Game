@@ -16,37 +16,28 @@ public class RessourceManager {
 	
 	private static String directoryPath;
 	private static HashMap <String, BufferedImage> images;
-	private static HashMap <String, String> imageLocations;
 	private static ArrayList<BufferedImage> tiles;
 
 	static{
 		images = new HashMap<String, BufferedImage>();
-		imageLocations = new HashMap<String, String>();
-
-		imageLocations.put("misc.title", "misc" + File.separator + "title.png");
-		imageLocations.put("sprites.player", "sprites" + File.separator + "player.png");
-
 		directoryPath = determineDirectoryPath();
 		System.out.println("Loading files from: " + directoryPath);
 	}
 
 	public static BufferedImage getImage(String imageName){
 		if(images.containsKey(imageName))return images.get(imageName);
-		else if(imageLocations.containsKey(imageName)){
+		else{
 			BufferedImage image = null;
 
 			try {
-				File imageFile = new File(directoryPath + "res" + File.separator + imageLocations.get(imageName));
+//				File imageFile = new File(directoryPath + "res" + File.separator + imageLocations.get(imageName));
+				File imageFile = new File(getImagePath(imageName));
 				if(imageFile.isFile())image = ImageIO.read(imageFile);
 				else System.out.println("Error: Cannot find file: " + imageFile.getAbsolutePath());
 
 			} catch (IOException e) {e.printStackTrace();}
 
 			return image;
-		}
-		else{
-			System.out.println("Error: Cannot find path to '" + imageName + "' in imageLocations");
-			return null; 
 		}
 	}
 
@@ -114,5 +105,11 @@ public class RessourceManager {
 
 		path += File.separator;
 		return path;
+	}
+	
+	private static String getImagePath(String location){
+		location = location.replace('.', File.separatorChar);
+		location = directoryPath + "res" + File.separator + location + ".png";
+		return location;
 	}
 }
