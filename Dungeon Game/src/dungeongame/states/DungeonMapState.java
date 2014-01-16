@@ -38,7 +38,10 @@ public class DungeonMapState extends BaseState{
 	}
 
 	public void computeNextFrame() {
-		
+		BaseEntity.updateTimeSinceLastFrame();
+		for(BaseEntity e:activeMap.entitys){
+			e.computeNextFrame();
+		}
 	}
 
 }
