@@ -29,7 +29,7 @@ public class Player extends BaseEntity{
 				if(y>position.y){
 					y -= timeSinceLastFrame * speed;
 				}
-				else{
+				if(!(y>position.y)){
 					moving = false;
 					y = position.y;
 				}
@@ -38,7 +38,7 @@ public class Player extends BaseEntity{
 				if(x>position.x){
 					x -= timeSinceLastFrame * speed;
 				}
-				else{
+				if(!(x>position.x)){
 					moving = false;
 					x = position.x;
 				}
@@ -47,7 +47,7 @@ public class Player extends BaseEntity{
 				if(y<position.y){
 					y += timeSinceLastFrame * speed;
 				}
-				else{
+				if(!(y<position.y)){
 					moving = false;
 					y = position.y;
 				}
@@ -56,7 +56,7 @@ public class Player extends BaseEntity{
 				if(x<position.x){
 					x += timeSinceLastFrame * speed;
 				}
-				else{
+				if(!(x<position.x)){
 					moving = false;
 					x = position.x;
 				}
