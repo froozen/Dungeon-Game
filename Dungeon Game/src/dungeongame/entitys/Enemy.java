@@ -17,7 +17,7 @@ public class Enemy extends BaseEntity{
 		cyclePhase = 0;
 		moving = false;
 		
-		spriteLocation = "sprites.player";
+		spriteLocation = "sprites.enemy";
 		sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
 	}
 	
