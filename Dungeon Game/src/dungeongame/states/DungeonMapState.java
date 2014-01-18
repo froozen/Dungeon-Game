@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import dungeongame.basetypes.GameMap;
 import dungeongame.entitys.BaseEntity;
+import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
 
 public class DungeonMapState extends BaseState{
@@ -14,8 +15,9 @@ public class DungeonMapState extends BaseState{
 	public DungeonMapState(){
 		activeMap = new GameMap(25,20);
 		
-		player = new Player(new Point(1,1),activeMap);
+		player = new Player(new Point(1,1), activeMap);
 		activeMap.entitys.add(player);
+		activeMap.entitys.add(new Enemy(new Point(3, 3), activeMap));
 	}
 	
 	public void drawMe(Graphics g) {
