@@ -23,47 +23,7 @@ public class Player extends BaseEntity{
 		sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
 	}
 
-	public void computeNextFrame() {
-		if (moving){
-			if(direction == Direction.UP){
-				if(y>position.y){
-					y -= timeSinceLastFrame * speed;
-				}
-				if(!(y>position.y)){
-					moving = false;
-					y = position.y;
-				}
-			}
-			else if(direction == Direction.LEFT){
-				if(x>position.x){
-					x -= timeSinceLastFrame * speed;
-				}
-				if(!(x>position.x)){
-					moving = false;
-					x = position.x;
-				}
-			}
-			else if(direction == Direction.DOWN){
-				if(y<position.y){
-					y += timeSinceLastFrame * speed;
-				}
-				if(!(y<position.y)){
-					moving = false;
-					y = position.y;
-				}
-			}
-			else if(direction == Direction.RIGHT){
-				if(x<position.x){
-					x += timeSinceLastFrame * speed;
-				}
-				if(!(x<position.x)){
-					moving = false;
-					x = position.x;
-				}
-			}
-			
-		}
-		
+	public void initializeMovement() {
 		if(!moving){
 			if(GameInput.wasKeyDown("W")){
 				direction = Direction.UP;

@@ -9,10 +9,13 @@ import dungeongame.entitys.Player;
 
 public class DungeonMapState extends BaseState{
 	public GameMap activeMap;
+	private Player player;
 
 	public DungeonMapState(){
 		activeMap = new GameMap(25,20);
-		activeMap.entitys.add(new Player(new Point(1,1),activeMap));
+		
+		player = new Player(new Point(1,1),activeMap);
+		activeMap.entitys.add(player);
 	}
 	
 	public void drawMe(Graphics g) {
@@ -21,8 +24,23 @@ public class DungeonMapState extends BaseState{
 
 	public void computeNextFrame() {
 		BaseEntity.updateTimeSinceLastFrame();
+		
+		if(!player.moving){
+			player.initializeMovement();
+			
+			if(player.moving){
+				for(BaseEntity entity:activeMap.entitys){
+					if(entity != player){
+						entity.initializeMovement();
+					}
+				}
+			}
+		}
+		
+		
+		
 		for(BaseEntity e:activeMap.entitys){
-			e.computeNextFrame();
+			e.computeNextPosition();
 		}
 	}
 

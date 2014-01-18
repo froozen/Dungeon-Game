@@ -9,7 +9,7 @@ import dungeongame.basetypes.GameMap;
 
 public abstract class BaseEntity {
 	final double speed = 2.5;
-	
+
 	public Point position;
 	public double x, y;
 	public String spriteLocation;
@@ -21,8 +21,8 @@ public abstract class BaseEntity {
 
 	private static long lastTime;
 	public static double timeSinceLastFrame;
-
-	public abstract void computeNextFrame();
+	
+	public abstract void initializeMovement();
 
 	static{
 		lastTime = System.currentTimeMillis();
@@ -40,5 +40,47 @@ public abstract class BaseEntity {
 	public static void updateTimeSinceLastFrame(){
 		timeSinceLastFrame = ((double)(System.currentTimeMillis() - lastTime) / 1000);
 		lastTime = System.currentTimeMillis();
+	}
+
+	public void computeNextPosition(){
+		if (moving){
+			if(direction == Direction.UP){
+				if(y>position.y){
+					y -= timeSinceLastFrame * speed;
+				}
+				if(!(y>position.y)){
+					moving = false;
+					y = position.y;
+				}
+			}
+			else if(direction == Direction.LEFT){
+				if(x>position.x){
+					x -= timeSinceLastFrame * speed;
+				}
+				if(!(x>position.x)){
+					moving = false;
+					x = position.x;
+				}
+			}
+			else if(direction == Direction.DOWN){
+				if(y<position.y){
+					y += timeSinceLastFrame * speed;
+				}
+				if(!(y<position.y)){
+					moving = false;
+					y = position.y;
+				}
+			}
+			else if(direction == Direction.RIGHT){
+				if(x<position.x){
+					x += timeSinceLastFrame * speed;
+				}
+				if(!(x<position.x)){
+					moving = false;
+					x = position.x;
+				}
+			}
+
+		}
 	}
 }
