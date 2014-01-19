@@ -41,6 +41,52 @@ public abstract class BaseEntity {
 		timeSinceLastFrame = ((double)(System.currentTimeMillis() - lastTime) / 1000);
 		lastTime = System.currentTimeMillis();
 	}
+	
+	public void moveDirection(Direction movementDirection){
+		direction = movementDirection;
+		
+		if(movementDirection == Direction.RIGHT){
+			position.x++;
+			
+			if(!locationMap.occupied[position.x][position.y]){
+				moving = true;
+				locationMap.occupied[position.x - 1][position.y] = false;
+				locationMap.occupied[position.x][position.y] = true;
+			}
+			else position.x--;
+			
+		}
+		else if(movementDirection == Direction.LEFT){
+			position.x--;
+							
+			if(!locationMap.occupied[position.x][position.y]){
+				moving = true;
+				locationMap.occupied[position.x + 1][position.y] = false;
+				locationMap.occupied[position.x][position.y] = true;
+			}
+			else position.x++;
+		}
+		else if(movementDirection == Direction.DOWN){
+			position.y++;
+			
+			if(!locationMap.occupied[position.x][position.y]){
+				moving = true;
+				locationMap.occupied[position.x][position.y - 1] = false;
+				locationMap.occupied[position.x][position.y] = true;
+			}
+			else position.y--;
+		}
+		else if(movementDirection == Direction.UP){
+			position.y--;
+			
+			if(!locationMap.occupied[position.x][position.y]){
+				moving = true;
+				locationMap.occupied[position.x][position.y + 1] = false;
+				locationMap.occupied[position.x][position.y] = true;
+			}
+			else position.y++;
+		}
+	}
 
 	public void computeNextPosition(){
 		if (moving){

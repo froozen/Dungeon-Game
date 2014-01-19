@@ -19,6 +19,8 @@ public class Enemy extends BaseEntity{
 		
 		spriteLocation = "sprites.enemy";
 		sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
+		
+		location.occupied[position.x][position.y] = true;
 	}
 	
 	public void initializeMovement() {
@@ -32,26 +34,10 @@ public class Enemy extends BaseEntity{
 		}
 		
 		if(prey != null){
-			if(prey.position.x > position.x){
-				position.x++;
-				direction = Direction.RIGHT;
-				moving = true;
-			}
-			else if(prey.position.x < position.x){
-				position.x--;
-				direction = Direction.LEFT;
-				moving = true;
-			}
-			else if(prey.position.y > position.y){
-				position.y++;
-				direction = Direction.DOWN;
-				moving = true;
-			}
-			else if(prey.position.y < position.y){
-				position.y--;
-				direction = Direction.UP;
-				moving = true;
-			}
+			if(prey.position.x > position.x) moveDirection(Direction.RIGHT);
+			else if(prey.position.x < position.x) moveDirection(Direction.LEFT);
+			else if(prey.position.y > position.y) moveDirection(Direction.DOWN);
+			else if(prey.position.y < position.y) moveDirection(Direction.UP);
 		}
 		else System.out.println("Error: Unable to find Player in locationMap.entitys");
 	}

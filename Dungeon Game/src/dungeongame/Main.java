@@ -13,7 +13,7 @@ public class Main {
 			GameInput.pushInputs();
 			GameStateManager.computeNextFrame();
 			gameFrame.refresh();
-			try {Thread.sleep(15);}
+			try {Thread.sleep(10);}
 			catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}

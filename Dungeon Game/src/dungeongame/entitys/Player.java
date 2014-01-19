@@ -21,30 +21,18 @@ public class Player extends BaseEntity{
 		
 		spriteLocation = "sprites.player";
 		sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
+		
+		locationMap.occupied[position.x][position.y] = true;
 	}
 
 	public void initializeMovement() {
 		if(!moving){
-			if(GameInput.wasKeyDown("W")){
-				direction = Direction.UP;
-				moving = true;
-				position.y--;
-			}
-			else if(GameInput.wasKeyDown("A")){
-				direction = Direction.LEFT;
-				moving = true;
-				position.x--;
-			}
-			else if(GameInput.wasKeyDown("D")){
-				direction = Direction.RIGHT;
-				moving = true;
-				position.x++;
-			}
-			else if(GameInput.wasKeyDown("S")){
-				direction = Direction.DOWN;
-				moving = true;
-				position.y++;
-			}
+			if(GameInput.wasKeyDown("W"))moveDirection(Direction.UP);
+			else if(GameInput.wasKeyDown("A")) moveDirection(Direction.LEFT);
+			else if(GameInput.wasKeyDown("D")) moveDirection(Direction.RIGHT);
+			else if(GameInput.wasKeyDown("S")) moveDirection(Direction.DOWN);
+			
+			//TODO create moveDirection() method
 			
 			if(moving)System.out.println("target: x=" + position.x + " y=" + position.y);
 		}

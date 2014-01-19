@@ -17,7 +17,7 @@ public class DungeonMapState extends BaseState{
 		
 		player = new Player(new Point(1,1), activeMap);
 		activeMap.entitys.add(player);
-		activeMap.entitys.add(new Enemy(new Point(3, 3), activeMap));
+		activeMap.entitys.add(new Enemy(new Point(10, 13), activeMap));
 	}
 	
 	public void drawMe(Graphics g) {

@@ -1,5 +1,6 @@
 package dungeongame.basetypes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import dungeongame.entitys.BaseEntity;
 public class GameMap {
 	public int height, width;
 	public int [][] tiles;
+	public boolean [][] occupied;
 	public ArrayList<BaseEntity> entitys;
 	
 	public GameMap(int width, int height){
@@ -23,6 +25,8 @@ public class GameMap {
 				tiles[x][y] = 1;
 			}
 		}
+		
+		occupied = new boolean[width][height];
 	}
 	
 	public void drawMe(Graphics g){
@@ -32,14 +36,24 @@ public class GameMap {
 			}
 		}
 		
+		//Draw debug collision
+		g.setColor(Color.red);
+		for(int x = 0; x < occupied.length; x++){
+			for(int y = 0; y < occupied[x].length; y++){
+				if(occupied[x][y]){
+					g.fillRect(x * RessourceManager.tileSize, y * RessourceManager.tileSize, RessourceManager.tileSize, RessourceManager.tileSize);
+				}
+			}
+		}
+		
 		//Draw debug lines
+		g.setColor(Color.black);
 		for(int x = 0; x < tiles.length;x++){
 			g.drawLine(x * RessourceManager.tileSize, 0, x * RessourceManager.tileSize, tiles[x].length * RessourceManager.tileSize);
 		}
 		for(int y = 0; y < tiles[0].length;y++){
 			g.drawLine(0, y * RessourceManager.tileSize, tiles.length * RessourceManager.tileSize, y * RessourceManager.tileSize);
 		}
-		
 		
 		for(BaseEntity entity:entitys){
 			entity.drawMe(g);
