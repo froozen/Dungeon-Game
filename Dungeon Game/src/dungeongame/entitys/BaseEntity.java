@@ -127,6 +127,15 @@ public abstract class BaseEntity {
 				}
 			}
 
+			if(direction == Direction.RIGHT || direction == Direction.LEFT){
+				if(x - ((int)x) + 0.25 > 0.50)cyclePhase = 1;
+				else cyclePhase = 0;
+			}
+			else if(direction == Direction.UP || direction == Direction.DOWN){
+				if(y - ((int)y) + 0.25 > 0.50)cyclePhase = 1;
+				else cyclePhase = 0;
+			}
+			
 		}
 	}
 }
