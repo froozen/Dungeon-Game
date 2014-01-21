@@ -17,6 +17,7 @@ public class Player extends BaseEntity{
 
 		direction = Direction.DOWN;
 		cyclePhase = 0;
+		lastCyclePhase = 2;
 		moving = false;
 
 		spriteLocation = "sprites.player";

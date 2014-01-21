@@ -18,6 +18,8 @@ public abstract class BaseEntity {
 	public Direction direction;
 	public int cyclePhase;
 	public boolean moving;
+	
+	protected int lastCyclePhase;
 
 	private static long lastTime;
 	public static double timeSinceLastFrame;
@@ -27,12 +29,7 @@ public abstract class BaseEntity {
 	static{
 		lastTime = System.currentTimeMillis();
 	}
-
-	public void drawMe(Graphics g){
-		sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
-		g.drawImage(sprite, (int) (x * RessourceManager.tileSize - ((sprite.getWidth() - RessourceManager.tileSize) / 2)), (int) ((y + 1) * RessourceManager.tileSize - sprite.getHeight()), null);
-	}
-
+	
 	public enum Direction{
 		DOWN, RIGHT, UP, LEFT
 	}
@@ -40,6 +37,11 @@ public abstract class BaseEntity {
 	public static void updateTimeSinceLastFrame(){
 		timeSinceLastFrame = ((double)(System.currentTimeMillis() - lastTime) / 1000);
 		lastTime = System.currentTimeMillis();
+	}
+	
+	public void drawMe(Graphics g){
+		loadSprite();
+		g.drawImage(sprite, (int) (x * RessourceManager.tileSize - ((sprite.getWidth() - RessourceManager.tileSize) / 2)), (int) ((y + 1) * RessourceManager.tileSize - sprite.getHeight()), null);
 	}
 	
 	public void moveDirection(Direction movementDirection){
@@ -126,16 +128,35 @@ public abstract class BaseEntity {
 					x = position.x;
 				}
 			}
-
+		}
+	}
+	
+	protected void loadSprite(){
+		if(spriteLocation != null){
 			if(direction == Direction.RIGHT || direction == Direction.LEFT){
-				if(x - ((int)x) + 0.25 > 0.50)cyclePhase = 1;
+				if(x - ((int)x) + 0.25 > 0.50){
+					if(cyclePhase != lastCyclePhase){
+						if(lastCyclePhase == 1) lastCyclePhase = 2;
+						else lastCyclePhase = 1;
+						
+						cyclePhase = lastCyclePhase;
+					}
+				}
 				else cyclePhase = 0;
 			}
 			else if(direction == Direction.UP || direction == Direction.DOWN){
-				if(y - ((int)y) + 0.25 > 0.50)cyclePhase = 1;
+				if(y - ((int)y) + 0.25 > 0.50){
+					if(cyclePhase != lastCyclePhase){
+						if(lastCyclePhase == 1) lastCyclePhase = 2;
+						else lastCyclePhase = 1;
+						
+						cyclePhase = lastCyclePhase;
+					}
+				}
 				else cyclePhase = 0;
 			}
 			
+			sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
 		}
 	}
 }
