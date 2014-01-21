@@ -30,6 +30,20 @@ public abstract class BaseEntity {
 		lastTime = System.currentTimeMillis();
 	}
 	
+	public BaseEntity(Point position, GameMap locationMap){
+		this.locationMap = locationMap;
+		this.position = position;
+		this.x = position.x;
+		this.y = position.y;
+
+		direction = Direction.DOWN;
+		cyclePhase = 0;
+		lastCyclePhase = 2;
+		moving = false;
+
+		locationMap.occupied[position.x][position.y] = true;
+	}
+	
 	public enum Direction{
 		DOWN, RIGHT, UP, LEFT
 	}

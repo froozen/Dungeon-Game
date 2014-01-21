@@ -2,26 +2,13 @@ package dungeongame.entitys;
 
 import java.awt.Point;
 
-import dungeongame.RessourceManager;
 import dungeongame.basetypes.GameMap;
 
 public class Enemy extends BaseEntity{
 
 	public Enemy(Point position, GameMap location){
-		this.locationMap = location;
-		this.position = position;
-		this.x = position.x;
-		this.y = position.y;
-		
-		direction = Direction.DOWN;
-		cyclePhase = 0;
-		lastCyclePhase = 2;
-		moving = false;
-		
+		super(position, location);
 		spriteLocation = "sprites.enemy";
-		sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
-		
-		location.occupied[position.x][position.y] = true;
 	}
 	
 	public void initializeMovement() {
