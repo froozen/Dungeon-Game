@@ -18,18 +18,18 @@ public abstract class BaseEntity {
 	public Direction direction;
 	public int cyclePhase;
 	public boolean moving;
-	
+
 	protected int lastCyclePhase;
 
 	private static long lastTime;
 	public static double timeSinceLastFrame;
-	
+
 	public abstract void initializeMovement();
 
 	static{
 		lastTime = System.currentTimeMillis();
 	}
-	
+
 	public BaseEntity(Point position, GameMap locationMap){
 		this.locationMap = locationMap;
 		this.position = position;
@@ -43,7 +43,7 @@ public abstract class BaseEntity {
 
 		locationMap.occupied[position.x][position.y] = true;
 	}
-	
+
 	public enum Direction{
 		DOWN, RIGHT, UP, LEFT
 	}
@@ -52,53 +52,65 @@ public abstract class BaseEntity {
 		timeSinceLastFrame = ((double)(System.currentTimeMillis() - lastTime) / 1000);
 		lastTime = System.currentTimeMillis();
 	}
-	
+
 	public void drawMe(Graphics g){
 		loadSprite();
 		g.drawImage(sprite, (int) (x * RessourceManager.tileSize - ((sprite.getWidth() - RessourceManager.tileSize) / 2)), (int) ((y + 1) * RessourceManager.tileSize - sprite.getHeight()), null);
 	}
-	
+
 	public void moveDirection(Direction movementDirection){
 		direction = movementDirection;
-		
+
 		if(movementDirection == Direction.RIGHT){
 			position.x++;
-			
-			if(!locationMap.occupied[position.x][position.y]){
-				moving = true;
-				locationMap.occupied[position.x - 1][position.y] = false;
-				locationMap.occupied[position.x][position.y] = true;
+
+			if(position.x > -1 && position.x < locationMap.width){
+				if(!locationMap.occupied[position.x][position.y]){
+					moving = true;
+					locationMap.occupied[position.x - 1][position.y] = false;
+					locationMap.occupied[position.x][position.y] = true;
+				}
+				else position.x--;
 			}
 			else position.x--;
-			
+
 		}
 		else if(movementDirection == Direction.LEFT){
 			position.x--;
-							
-			if(!locationMap.occupied[position.x][position.y]){
-				moving = true;
-				locationMap.occupied[position.x + 1][position.y] = false;
-				locationMap.occupied[position.x][position.y] = true;
+
+			if(position.x > -1 && position.x < locationMap.width){
+				if(!locationMap.occupied[position.x][position.y]){
+					moving = true;
+					locationMap.occupied[position.x + 1][position.y] = false;
+					locationMap.occupied[position.x][position.y] = true;
+				}
+				else position.x++;
 			}
 			else position.x++;
 		}
 		else if(movementDirection == Direction.DOWN){
 			position.y++;
-			
-			if(!locationMap.occupied[position.x][position.y]){
-				moving = true;
-				locationMap.occupied[position.x][position.y - 1] = false;
-				locationMap.occupied[position.x][position.y] = true;
+
+			if(position.y > -1 && position.y < locationMap.height){
+				if(!locationMap.occupied[position.x][position.y]){
+					moving = true;
+					locationMap.occupied[position.x][position.y - 1] = false;
+					locationMap.occupied[position.x][position.y] = true;
+				}
+				else position.y--;
 			}
 			else position.y--;
 		}
 		else if(movementDirection == Direction.UP){
 			position.y--;
-			
-			if(!locationMap.occupied[position.x][position.y]){
-				moving = true;
-				locationMap.occupied[position.x][position.y + 1] = false;
-				locationMap.occupied[position.x][position.y] = true;
+
+			if(position.y > -1 && position.y < locationMap.height){
+				if(!locationMap.occupied[position.x][position.y]){
+					moving = true;
+					locationMap.occupied[position.x][position.y + 1] = false;
+					locationMap.occupied[position.x][position.y] = true;
+				}
+				else position.y++;
 			}
 			else position.y++;
 		}
@@ -144,7 +156,7 @@ public abstract class BaseEntity {
 			}
 		}
 	}
-	
+
 	protected void loadSprite(){
 		if(spriteLocation != null){
 			if(direction == Direction.RIGHT || direction == Direction.LEFT){
@@ -152,7 +164,7 @@ public abstract class BaseEntity {
 					if(cyclePhase != lastCyclePhase){
 						if(lastCyclePhase == 1) lastCyclePhase = 2;
 						else lastCyclePhase = 1;
-						
+
 						cyclePhase = lastCyclePhase;
 					}
 				}
@@ -163,13 +175,13 @@ public abstract class BaseEntity {
 					if(cyclePhase != lastCyclePhase){
 						if(lastCyclePhase == 1) lastCyclePhase = 2;
 						else lastCyclePhase = 1;
-						
+
 						cyclePhase = lastCyclePhase;
 					}
 				}
 				else cyclePhase = 0;
 			}
-			
+
 			sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
 		}
 	}
