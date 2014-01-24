@@ -2,9 +2,11 @@ package dungeongame.states;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import dungeongame.basetypes.GameMap;
 import dungeongame.entitys.BaseEntity;
+import dungeongame.entitys.BattleEntity;
 import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
 
@@ -45,10 +47,22 @@ public class DungeonMapState extends BaseState{
 			}
 		}
 		
-		
-		
 		for(BaseEntity e:activeMap.entitys){
 			e.computeNextPosition();
+		}
+		
+		ArrayList<BattleEntity> removeList = new ArrayList<BattleEntity>();
+		for(BaseEntity entity:activeMap.entitys){
+			if(entity instanceof BattleEntity){
+				BattleEntity battleEntity = (BattleEntity)entity;
+				if(battleEntity.battleStats.hp < 1){
+					removeList.add(battleEntity);
+				}
+			}
+		}
+		
+		for(BattleEntity entity:removeList){
+			activeMap.entitys.remove(entity);
 		}
 	}
 

@@ -2,6 +2,7 @@ package dungeongame.basetypes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import dungeongame.RessourceManager;
@@ -58,5 +59,12 @@ public class GameMap {
 		for(BaseEntity entity:entitys){
 			entity.drawMe(g);
 		}
+	}
+	
+	public BaseEntity getEntityAt(Point position){
+		for(BaseEntity entity:entitys){
+			if(entity.position.equals(position))return entity;
+		}
+		return null;
 	}
 }

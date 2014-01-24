@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import dungeongame.basetypes.GameMap;
 
-public class Enemy extends BaseEntity{
+public class Enemy extends BattleEntity{
 
 	public Enemy(Point position, GameMap location){
 		super(position, location);
