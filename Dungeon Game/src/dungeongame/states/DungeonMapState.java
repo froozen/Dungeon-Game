@@ -27,7 +27,13 @@ public class DungeonMapState extends BaseState{
 	public void computeNextFrame() {
 		BaseEntity.updateTimeSinceLastFrame();
 		
-		if(!player.moving){
+		boolean anythingMoving = false;
+		
+		for(BaseEntity entity:activeMap.entitys){
+			if(entity.moving)anythingMoving = true;
+		}
+		
+		if(!anythingMoving){
 			player.initializeMovement();
 			
 			if(player.moving){
