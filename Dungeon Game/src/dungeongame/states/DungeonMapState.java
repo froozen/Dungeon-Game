@@ -62,6 +62,7 @@ public class DungeonMapState extends BaseState{
 		}
 		
 		for(BattleEntity entity:removeList){
+			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
 			activeMap.entitys.remove(entity);
 		}
 	}
