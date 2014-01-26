@@ -8,7 +8,7 @@ public class Main {
 		BaseEntity.updateTimeSinceLastFrame();
 		
 		GameFrame gameFrame = new GameFrame();
-		
+				
 		while(true){
 			GameInput.pushInputs();
 			GameStateManager.computeNextFrame();
