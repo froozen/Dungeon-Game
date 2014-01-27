@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import dungeongame.BattleStats;
 import dungeongame.GameInput;
+import dungeongame.GameVariables;
 import dungeongame.basetypes.GameMap;
 
 public class Player extends BattleEntity{
@@ -11,8 +12,13 @@ public class Player extends BattleEntity{
 
 	public Player(Point position, GameMap locationMap){
 		super(position, locationMap);
+
+		if(GameVariables.playerBattleStats == null){
+			battleStats = new BattleStats(200, 5, 5);
+			GameVariables.playerBattleStats = battleStats;
+		}
+		else battleStats = GameVariables.playerBattleStats;
 		
-		battleStats = new BattleStats(200, 5, 5);
 		spriteLocation = "sprites.player";
 	}
 

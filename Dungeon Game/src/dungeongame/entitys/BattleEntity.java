@@ -7,7 +7,6 @@ import dungeongame.basetypes.GameMap;
 
 public abstract class BattleEntity extends BaseEntity{
 	public BattleStats battleStats;
-	public String battleStatsName;
 	
 	public BattleEntity(Point position, GameMap locationMap) {
 		super(position, locationMap);
