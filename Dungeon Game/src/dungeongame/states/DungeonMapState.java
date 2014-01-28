@@ -16,28 +16,28 @@ public class DungeonMapState extends BaseState{
 
 	public DungeonMapState(){
 		activeMap = new GameMap(25,19);
-		
+
 		player = new Player(new Point(1,1), activeMap);
 		activeMap.entitys.add(player);
 		activeMap.entitys.add(new Enemy(new Point(10, 13), activeMap));
 	}
-	
+
 	public void drawMe(Graphics g) {
 		activeMap.drawMe(g);
 	}
 
 	public void computeNextFrame() {
 		BaseEntity.updateTimeSinceLastFrame();
-		
+
 		boolean anythingMoving = false;
-		
+
 		for(BaseEntity entity:activeMap.entitys){
 			if(entity.moving)anythingMoving = true;
 		}
-		
+
 		if(!anythingMoving){
 			player.initializeMovement();
-			
+
 			if(player.moving){
 				for(BaseEntity entity:activeMap.entitys){
 					if(entity != player){
@@ -46,11 +46,11 @@ public class DungeonMapState extends BaseState{
 				}
 			}
 		}
-		
+
 		for(BaseEntity e:activeMap.entitys){
 			e.computeNextPosition();
 		}
-		
+
 		ArrayList<BattleEntity> removeList = new ArrayList<BattleEntity>();
 		for(BaseEntity entity:activeMap.entitys){
 			if(entity instanceof BattleEntity){
@@ -60,7 +60,7 @@ public class DungeonMapState extends BaseState{
 				}
 			}
 		}
-		
+
 		for(BattleEntity entity:removeList){
 			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
 			activeMap.entitys.remove(entity);
