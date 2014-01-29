@@ -16,9 +16,7 @@ import dungeongame.entitys.BaseEntity.Direction;
 
 public class RessourceManager {
 	public static final int tileSize = 32;
-	
-//	private static final int fontHeight = 12, fontWidth = 5;
-	
+		
 	private static String directoryPath;
 	private static HashMap <String, BufferedImage> images;
 	private static HashMap <Character, Point> fontPositions;
@@ -90,6 +88,18 @@ public class RessourceManager {
 		fontPositions.put('!', new Point(2, 6));
 		fontPositions.put('?', new Point(3, 6));
 		fontPositions.put(',', new Point(4, 6));
+		
+		fontPositions.put('1', new Point(0, 7));
+		fontPositions.put('2', new Point(1, 7));
+		fontPositions.put('3', new Point(2, 7));
+		fontPositions.put('4', new Point(3, 7));
+		fontPositions.put('5', new Point(4, 7));
+		fontPositions.put('6', new Point(5, 7));
+		fontPositions.put('7', new Point(6, 7));
+		fontPositions.put('8', new Point(7, 7));
+		fontPositions.put('9', new Point(8, 7));
+		fontPositions.put('0', new Point(9, 7));
+
 	}
 
 	public static BufferedImage getImage(String imageName){
@@ -162,7 +172,7 @@ public class RessourceManager {
 		
 		BufferedImage fontMap = getImage("fonts." + font);
 		int fontWidth = fontMap.getWidth() / 10;
-		int fontHeight = fontMap.getHeight() / 7;
+		int fontHeight = fontMap.getHeight() / 8;
 		
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
 		
@@ -189,7 +199,7 @@ public class RessourceManager {
 		
 		BufferedImage fontMap = getImage("fonts." + font);
 		int fontWidth = fontMap.getWidth() / 10;
-		int fontHeight = fontMap.getHeight() / 7;
+		int fontHeight = fontMap.getHeight() / 8;
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
 		
 		Graphics textImageGraphics = textImage.getGraphics();

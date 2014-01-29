@@ -1,6 +1,5 @@
 package dungeongame.basetypes;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -37,28 +36,29 @@ public class GameMap {
 			}
 		}
 		
-		//Draw debug collision
-		g.setColor(Color.red);
-		for(int x = 0; x < occupied.length; x++){
-			for(int y = 0; y < occupied[x].length; y++){
-				if(occupied[x][y]){
-					g.fillRect(x * RessourceManager.tileSize, y * RessourceManager.tileSize, RessourceManager.tileSize, RessourceManager.tileSize);
-				}
-			}
-		}
+		// //Draw debug collision
+//		g.setColor(Color.red);
+//		for(int x = 0; x < occupied.length; x++){
+//			for(int y = 0; y < occupied[x].length; y++){
+//				if(occupied[x][y]){
+//					g.fillRect(x * RessourceManager.tileSize, y * RessourceManager.tileSize, RessourceManager.tileSize, RessourceManager.tileSize);
+//				}
+//			}
+//		}
 		
-		//Draw debug lines
-		g.setColor(Color.black);
-		for(int x = 0; x < tiles.length;x++){
-			g.drawLine(x * RessourceManager.tileSize, 0, x * RessourceManager.tileSize, tiles[x].length * RessourceManager.tileSize);
-		}
-		for(int y = 0; y < tiles[0].length;y++){
-			g.drawLine(0, y * RessourceManager.tileSize, tiles.length * RessourceManager.tileSize, y * RessourceManager.tileSize);
-		}
-		
+		// //Draw debug lines
+//		g.setColor(Color.black);
+//		for(int x = 0; x < tiles.length;x++){
+//			g.drawLine(x * RessourceManager.tileSize, 0, x * RessourceManager.tileSize, tiles[x].length * RessourceManager.tileSize);
+//		}
+//		for(int y = 0; y < tiles[0].length;y++){
+//			g.drawLine(0, y * RessourceManager.tileSize, tiles.length * RessourceManager.tileSize, y * RessourceManager.tileSize);
+//		}
+//		
 		for(BaseEntity entity:entitys){
 			entity.drawMe(g);
 		}
+		
 	}
 	
 	public BaseEntity getEntityAt(Point position){

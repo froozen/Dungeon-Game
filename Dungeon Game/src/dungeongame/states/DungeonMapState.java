@@ -27,7 +27,7 @@ public class DungeonMapState extends BaseState{
 	public void drawMe(Graphics g) {
 		activeMap.drawMe(g);
 		
-		BufferedImage text = RessourceManager.getFontifiedText("Demo text", "fonts_outline");
+		BufferedImage text = RessourceManager.getFontifiedText("Demo text", "outline");
 		g.drawImage(text, 800 - text.getWidth() - 5, 2, null);
 	}
 
