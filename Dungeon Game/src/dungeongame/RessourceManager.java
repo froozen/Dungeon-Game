@@ -17,7 +17,7 @@ import dungeongame.entitys.BaseEntity.Direction;
 public class RessourceManager {
 	public static final int tileSize = 32;
 	
-	private static final int fontHeight = 12, fontWidth = 5;
+//	private static final int fontHeight = 12, fontWidth = 5;
 	
 	private static String directoryPath;
 	private static HashMap <String, BufferedImage> images;
@@ -161,9 +161,10 @@ public class RessourceManager {
 		int charCount = text.length();
 		
 		BufferedImage fontMap = getImage("fonts." + font);
+		int fontWidth = fontMap.getWidth() / 10;
+		int fontHeight = fontMap.getHeight() / 7;
+		
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
-		
-		
 		
 		Graphics textImageGraphics = textImage.getGraphics();
 		
@@ -187,9 +188,9 @@ public class RessourceManager {
 		int charCount = text.length();
 		
 		BufferedImage fontMap = getImage("fonts." + font);
+		int fontWidth = fontMap.getWidth() / 10;
+		int fontHeight = fontMap.getHeight() / 7;
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
-		
-		
 		
 		Graphics textImageGraphics = textImage.getGraphics();
 		

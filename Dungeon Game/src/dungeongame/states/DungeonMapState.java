@@ -2,8 +2,10 @@ package dungeongame.states;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import dungeongame.RessourceManager;
 import dungeongame.basetypes.GameMap;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.BattleEntity;
@@ -24,6 +26,9 @@ public class DungeonMapState extends BaseState{
 
 	public void drawMe(Graphics g) {
 		activeMap.drawMe(g);
+		
+		BufferedImage text = RessourceManager.getFontifiedText("Demo text", "fonts_outline");
+		g.drawImage(text, 800 - text.getWidth() - 5, 2, null);
 	}
 
 	public void computeNextFrame() {
