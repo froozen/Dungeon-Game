@@ -84,11 +84,12 @@ public class RessourceManager {
 		fontPositions.put('x', new Point(3, 5));
 		fontPositions.put('y', new Point(4, 5));
 		fontPositions.put('z', new Point(5, 5));
-		
-		fontPositions.put('.', new Point(0, 6));
-		fontPositions.put('!', new Point(1, 6));
-		fontPositions.put('?', new Point(2, 6));
-		fontPositions.put(' ', new Point(3, 6));
+
+		fontPositions.put(' ', new Point(0, 6));
+		fontPositions.put('.', new Point(1, 6));
+		fontPositions.put('!', new Point(2, 6));
+		fontPositions.put('?', new Point(3, 6));
+		fontPositions.put(',', new Point(4, 6));
 	}
 
 	public static BufferedImage getImage(String imageName){
