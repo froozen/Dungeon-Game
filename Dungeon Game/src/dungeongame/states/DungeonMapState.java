@@ -24,16 +24,24 @@ public class DungeonMapState extends BaseState{
 		activeMap.entitys.add(new Enemy(new Point(1, 4), activeMap));
 	}
 
+	public void computeNextFrame() {
+		BaseEntity.updateTimeSinceLastFrame();
+
+		initializeMovements();
+		updatePositions();
+		removeEntities();
+		
+		activeMap.updateParticles();
+	}
+	
 	public void drawMe(Graphics g) {
 		activeMap.drawMe(g);
 		
 		BufferedImage text = RessourceManager.getFontifiedText("Demo text", "outline");
 		g.drawImage(text, 800 - text.getWidth() - 5, 2, null);
 	}
-
-	public void computeNextFrame() {
-		BaseEntity.updateTimeSinceLastFrame();
-
+	
+	private void initializeMovements(){
 		boolean anythingMoving = false;
 
 		for(BaseEntity entity:activeMap.entitys){
@@ -51,11 +59,15 @@ public class DungeonMapState extends BaseState{
 				}
 			}
 		}
+	}
 
+	private void updatePositions(){
 		for(BaseEntity e:activeMap.entitys){
 			e.computeNextPosition();
 		}
-
+	}
+	
+	private void removeEntities(){
 		ArrayList<BattleEntity> removeList = new ArrayList<BattleEntity>();
 		for(BaseEntity entity:activeMap.entitys){
 			if(entity instanceof BattleEntity){
@@ -70,8 +82,5 @@ public class DungeonMapState extends BaseState{
 			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
 			activeMap.entitys.remove(entity);
 		}
-		
-		activeMap.updateParticles();
 	}
-
 }
