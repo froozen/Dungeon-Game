@@ -3,7 +3,9 @@ package dungeongame.entitys;
 import java.awt.Point;
 
 import dungeongame.BattleStats;
+import dungeongame.RessourceManager;
 import dungeongame.basetypes.GameMap;
+import dungeongame.particles.DamageNumberParticle;
 
 public abstract class BattleEntity extends BaseEntity{
 	public BattleStats battleStats;
@@ -24,9 +26,15 @@ public abstract class BattleEntity extends BaseEntity{
 		if(target != null){
 			if(target instanceof BattleEntity){
 				BattleEntity battleTarget = (BattleEntity)target;
-				battleTarget.battleStats.dealDamage(battleStats.atk);
+				battleTarget.receiveDamage(battleStats.atk);
 				moving = true;
 			}
 		}
+	}
+	
+	public void receiveDamage(int damage){
+		battleStats.dealDamage(damage);
+		
+		locationMap.particles.add(new DamageNumberParticle(damage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) + (sprite.getHeight() / 3)));
 	}
 }

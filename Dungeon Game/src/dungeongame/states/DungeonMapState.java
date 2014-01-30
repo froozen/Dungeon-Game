@@ -21,7 +21,7 @@ public class DungeonMapState extends BaseState{
 
 		player = new Player(new Point(1,1), activeMap);
 		activeMap.entitys.add(player);
-		activeMap.entitys.add(new Enemy(new Point(10, 13), activeMap));
+		activeMap.entitys.add(new Enemy(new Point(1, 4), activeMap));
 	}
 
 	public void drawMe(Graphics g) {
@@ -70,6 +70,8 @@ public class DungeonMapState extends BaseState{
 			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
 			activeMap.entitys.remove(entity);
 		}
+		
+		activeMap.updateParticles();
 	}
 
 }

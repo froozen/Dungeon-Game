@@ -21,6 +21,5 @@ public class BattleStats {
 	public void dealDamage(int atk){
 		atk -= def;
 		if(atk > 0)hp -= atk;
-		System.out.println("Damage!");
 	}
 }

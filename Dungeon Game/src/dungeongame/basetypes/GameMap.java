@@ -6,15 +6,18 @@ import java.util.ArrayList;
 
 import dungeongame.RessourceManager;
 import dungeongame.entitys.BaseEntity;
+import dungeongame.particles.BaseParticle;
 
 public class GameMap {
 	public int height, width;
 	public int [][] tiles;
 	public boolean [][] occupied;
 	public ArrayList<BaseEntity> entitys;
+	public ArrayList<BaseParticle> particles;
 	
 	public GameMap(int width, int height){
 		entitys = new ArrayList<BaseEntity>();
+		particles = new ArrayList<BaseParticle>();
 		
 		this.height = height;
 		this.width = width;
@@ -55,10 +58,23 @@ public class GameMap {
 //			g.drawLine(0, y * RessourceManager.tileSize, tiles.length * RessourceManager.tileSize, y * RessourceManager.tileSize);
 //		}
 //		
-		for(BaseEntity entity:entitys){
-			entity.drawMe(g);
+		for(BaseEntity entity:entitys)entity.drawMe(g);
+		
+		for(BaseParticle particle:particles)particle.drawMe(g);
+		
+	}
+	
+	public void updateParticles(){
+		BaseParticle.updateTimeSinceLastFrame();
+		
+		ArrayList<BaseParticle> removeParticles = new ArrayList<BaseParticle>();
+		for(BaseParticle particle:particles){
+			particle.updatePosition();
+			if(particle.remove)removeParticles.add(particle);
 		}
 		
+		//Remove "dead" particles
+		for(BaseParticle particle:removeParticles)particles.remove(particle);
 	}
 	
 	public BaseEntity getEntityAt(Point position){
