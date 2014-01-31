@@ -24,7 +24,7 @@ public class TitleScreenState extends BaseState{
 
 		if(GameInput.wasKeyPressed("X")){
 			System.out.println("Switching to DungeonMapState");
-			GameStateManager.changeGameState(new DungeonMapState());
+			GameStateManager.changeBackgroundState(new DungeonMapState());
 		}
 	}
 

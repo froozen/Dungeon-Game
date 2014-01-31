@@ -6,21 +6,37 @@ import dungeongame.states.BaseState;
 import dungeongame.states.TitleScreenState;
 
 public class GameStateManager {
-	public static BaseState currentGameState;
+	public static BaseState foregroundState, backgroundState;
+	public static GameStateFocus focus;
 	
 	static{
-		currentGameState = new TitleScreenState();
+		backgroundState = new TitleScreenState();
+		focus = GameStateFocus.BACKGROUND;
 	}
 	
 	public static void drawCurrentGameState(Graphics g){
-		currentGameState.drawMe(g);
+		if(backgroundState != null)backgroundState.drawMe(g);
+		if(foregroundState != null)foregroundState.drawMe(g);
 	}
 	
-	public static void changeGameState(BaseState state){
-		currentGameState = state;
+	public static void changeBackgroundState(BaseState state){
+		backgroundState = state;
+	}
+	
+	public static void changeForegroundState(BaseState state){
+		foregroundState = state;
 	}
 	
 	public static void computeNextFrame(){
-		currentGameState.computeNextFrame();
+		if(focus == GameStateFocus.BACKGROUND)backgroundState.computeNextFrame();
+		else if(focus == GameStateFocus.FOREGROUND)foregroundState.computeNextFrame();
+	}
+	
+	public static void changeGameStateFocus(GameStateFocus newFocus){
+		focus = newFocus;
+	}
+	
+	public enum GameStateFocus{
+		FOREGROUND, BACKGROUND
 	}
 }
