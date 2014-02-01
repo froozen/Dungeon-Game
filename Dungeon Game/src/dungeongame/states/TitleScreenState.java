@@ -15,7 +15,7 @@ public class TitleScreenState extends BaseState{
 	public void drawMe(Graphics g) {
 		g.drawImage(RessourceManager.getImage("misc.title"), 0, 0, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("Fontrender demo text", "standart"), 2, 2, null);
+		g.drawImage(RessourceManager.getFontifiedText("Fontrender demo text", "standard"), 2, 2, null);
 	}
 
 	public void computeNextFrame() {

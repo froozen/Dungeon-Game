@@ -172,7 +172,6 @@ public class RessourceManager {
 		int charCount = text.length();
 
 		BufferedImage fontMap = getImage("fonts." + font);
-		if(fontMap == null)System.out.println("Error: Cannot find fontMap: " + font);
 		int fontWidth = fontMap.getWidth() / 10;
 		int fontHeight = fontMap.getHeight() / 8;
 
