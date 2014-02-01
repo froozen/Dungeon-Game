@@ -16,7 +16,7 @@ import dungeongame.entitys.BaseEntity.Direction;
 
 public class RessourceManager {
 	public static final int tileSize = 32;
-		
+
 	private static String directoryPath;
 	private static HashMap <String, BufferedImage> images;
 	private static HashMap <Character, Point> fontPositions;
@@ -26,9 +26,9 @@ public class RessourceManager {
 		images = new HashMap<String, BufferedImage>();
 		directoryPath = determineDirectoryPath();
 		System.out.println("Loading files from: " + directoryPath);
-		
+
 		fontPositions = new HashMap<Character, Point>();
-		
+
 		fontPositions.put('A', new Point(0, 0));
 		fontPositions.put('B', new Point(1, 0));
 		fontPositions.put('C', new Point(2, 0));
@@ -55,7 +55,7 @@ public class RessourceManager {
 		fontPositions.put('X', new Point(3, 2));
 		fontPositions.put('Y', new Point(4, 2));
 		fontPositions.put('Z', new Point(5, 2));
-		
+
 		fontPositions.put('a', new Point(0, 3));
 		fontPositions.put('b', new Point(1, 3));
 		fontPositions.put('c', new Point(2, 3));
@@ -88,7 +88,8 @@ public class RessourceManager {
 		fontPositions.put('!', new Point(2, 6));
 		fontPositions.put('?', new Point(3, 6));
 		fontPositions.put(',', new Point(4, 6));
-		
+		fontPositions.put('/', new Point(5, 6));
+
 		fontPositions.put('1', new Point(0, 7));
 		fontPositions.put('2', new Point(1, 7));
 		fontPositions.put('3', new Point(2, 7));
@@ -136,7 +137,7 @@ public class RessourceManager {
 			if(tileFile.isFile()){
 				tiles = new ArrayList<BufferedImage>();
 				BufferedImage tileSetImage = ImageIO.read(tileFile);
-				
+
 				for(int y = 0; y < tileSetImage.getHeight() / tileSize; y++){
 					for(int x = 0; x < tileSetImage.getWidth() / tileSize; x++){
 						tiles.add(tileSetImage.getSubimage(x * tileSize, y * tileSize, tileSize, tileSize));
@@ -144,83 +145,84 @@ public class RessourceManager {
 				}
 			}
 			else System.out.println("Error: Cannot find file: " + tileFile.getAbsolutePath());
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static BufferedImage getCharacterSprite(String spriteName, Direction direction, int cyclePhase){
 		BufferedImage sprite = getImage(spriteName);
-		
+
 		int spriteWidth = sprite.getWidth() / 3;
 		int spriteHeight = sprite.getHeight() / 4;
-		
+
 		int directionNumber = 0;
 		if(direction == Direction.DOWN)directionNumber = 0;
 		else if(direction == Direction.RIGHT)directionNumber = 1;
 		else if(direction == Direction.UP)directionNumber = 2;
 		else if(direction == Direction.LEFT)directionNumber = 3;
-		
+
 		sprite = sprite.getSubimage(cyclePhase * spriteWidth, directionNumber * spriteHeight, spriteWidth, spriteHeight);
-		
+
 		return sprite;
 	}
-	
+
 	public static BufferedImage getFontifiedText(String text, String font){
 		int charCount = text.length();
-		
+
 		BufferedImage fontMap = getImage("fonts." + font);
+		if(fontMap == null)System.out.println("Error: Cannot find fontMap: " + font);
 		int fontWidth = fontMap.getWidth() / 10;
 		int fontHeight = fontMap.getHeight() / 8;
-		
+
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
-		
+
 		Graphics textImageGraphics = textImage.getGraphics();
-		
+
 		BufferedImage fontImage;
 		Point fontPosition = new Point();
 		if(fontMap != null){
 			for(int i = 0; i < charCount; i++){
 				if(fontPositions.containsKey(text.charAt(i)))fontPosition = fontPositions.get(text.charAt(i));
 				else fontPosition = fontPositions.get('?');
-				
+
 				fontImage = fontMap.getSubimage(fontPosition.x * fontWidth, fontPosition.y * fontHeight, fontWidth, fontHeight);
 				textImageGraphics.drawImage(fontImage, i * (fontWidth + 1), 0, null);
 			}
 		}
 		textImageGraphics.dispose();
-		
+
 		return textImage;
 	}
-	
-	public static BufferedImage getfontifiedScaledText(String text, String font, int scaleFactor){
+
+	public static BufferedImage getFontifiedScaledText(String text, String font, int scaleFactor){
 		int charCount = text.length();
-		
+
 		BufferedImage fontMap = getImage("fonts." + font);
 		int fontWidth = fontMap.getWidth() / 10;
 		int fontHeight = fontMap.getHeight() / 8;
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
-		
+
 		Graphics textImageGraphics = textImage.getGraphics();
-		
+
 		BufferedImage fontImage;
 		Point fontPosition = new Point();
 		if(fontMap != null){
 			for(int i = 0; i < charCount; i++){
 				if(fontPositions.containsKey(text.charAt(i)))fontPosition = fontPositions.get(text.charAt(i));
 				else fontPosition = fontPositions.get('?');
-				
+
 				fontImage = fontMap.getSubimage(fontPosition.x * fontWidth, fontPosition.y * fontHeight, fontWidth, fontHeight);
 				textImageGraphics.drawImage(fontImage, i * (fontWidth + 1), 0, null);
 			}
 		}
 		textImageGraphics.dispose();
-		
+
 		Image scaledTextImage = textImage.getScaledInstance(textImage.getWidth() * scaleFactor, textImage.getHeight() * scaleFactor, Image.SCALE_DEFAULT);
 		BufferedImage finalTextImage = new BufferedImage(scaledTextImage.getWidth(null), scaledTextImage.getWidth(null), BufferedImage.TYPE_INT_ARGB);
 		finalTextImage.getGraphics().drawImage(scaledTextImage, 0, 0, null);
-		
+
 		return finalTextImage;
 	}
 
@@ -240,7 +242,7 @@ public class RessourceManager {
 		path += File.separator;
 		return path;
 	}
-	
+
 	private static String getImagePath(String location){
 		location = location.replace('.', File.separatorChar);
 		location = directoryPath + "res" + File.separator + location + ".png";
