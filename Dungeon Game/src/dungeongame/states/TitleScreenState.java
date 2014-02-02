@@ -1,6 +1,7 @@
 package dungeongame.states;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
@@ -15,7 +16,9 @@ public class TitleScreenState extends BaseState{
 	public void drawMe(Graphics g) {
 		g.drawImage(RessourceManager.getImage("misc.title"), 0, 0, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("Fontrender demo text", "standard"), 2, 2, null);
+		BufferedImage pressXText = RessourceManager.getFontifiedText("Press X to enter the Game", "standard");
+		
+		g.drawImage(pressXText, 400 - (pressXText.getWidth() / 2), 400, null);
 	}
 
 	public void computeNextFrame() {
