@@ -35,6 +35,7 @@ public abstract class BattleEntity extends BaseEntity{
 	public void receiveDamage(int damage){
 		battleStats.dealDamage(damage);
 		
-		locationMap.particles.add(new DamageNumberParticle(damage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) + (sprite.getHeight() / 3)));
+		int actualDamage = damage - battleStats.def;
+		if(actualDamage > 0)locationMap.particles.add(new DamageNumberParticle(actualDamage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) + (sprite.getHeight() / 3)));
 	}
 }
