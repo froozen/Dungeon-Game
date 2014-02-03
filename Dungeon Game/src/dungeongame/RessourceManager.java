@@ -4,7 +4,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -27,84 +29,7 @@ public class RessourceManager {
 		directoryPath = determineDirectoryPath();
 		System.out.println("Loading files from: " + directoryPath);
 
-		fontPositions = new HashMap<Character, Point>();
-
-		fontPositions.put('A', new Point(0, 0));
-		fontPositions.put('B', new Point(1, 0));
-		fontPositions.put('C', new Point(2, 0));
-		fontPositions.put('D', new Point(3, 0));
-		fontPositions.put('E', new Point(4, 0));
-		fontPositions.put('F', new Point(5, 0));
-		fontPositions.put('G', new Point(6, 0));
-		fontPositions.put('H', new Point(7, 0));
-		fontPositions.put('I', new Point(8, 0));
-		fontPositions.put('J', new Point(9, 0));
-		fontPositions.put('K', new Point(0, 1));
-		fontPositions.put('L', new Point(1, 1));
-		fontPositions.put('M', new Point(2, 1));
-		fontPositions.put('N', new Point(3, 1));
-		fontPositions.put('O', new Point(4, 1));
-		fontPositions.put('P', new Point(5, 1));
-		fontPositions.put('Q', new Point(6, 1));
-		fontPositions.put('R', new Point(7, 1));
-		fontPositions.put('S', new Point(8, 1));
-		fontPositions.put('T', new Point(9, 1));
-		fontPositions.put('U', new Point(0, 2));
-		fontPositions.put('V', new Point(1, 2));
-		fontPositions.put('W', new Point(2, 2));
-		fontPositions.put('X', new Point(3, 2));
-		fontPositions.put('Y', new Point(4, 2));
-		fontPositions.put('Z', new Point(5, 2));
-
-		fontPositions.put('a', new Point(0, 3));
-		fontPositions.put('b', new Point(1, 3));
-		fontPositions.put('c', new Point(2, 3));
-		fontPositions.put('d', new Point(3, 3));
-		fontPositions.put('e', new Point(4, 3));
-		fontPositions.put('f', new Point(5, 3));
-		fontPositions.put('g', new Point(6, 3));
-		fontPositions.put('h', new Point(7, 3));
-		fontPositions.put('i', new Point(8, 3));
-		fontPositions.put('j', new Point(9, 3));
-		fontPositions.put('k', new Point(0, 4));
-		fontPositions.put('l', new Point(1, 4));
-		fontPositions.put('m', new Point(2, 4));
-		fontPositions.put('n', new Point(3, 4));
-		fontPositions.put('o', new Point(4, 4));
-		fontPositions.put('p', new Point(5, 4));
-		fontPositions.put('q', new Point(6, 4));
-		fontPositions.put('r', new Point(7, 4));
-		fontPositions.put('s', new Point(8, 4));
-		fontPositions.put('t', new Point(9, 4));
-		fontPositions.put('u', new Point(0, 5));
-		fontPositions.put('v', new Point(1, 5));
-		fontPositions.put('w', new Point(2, 5));
-		fontPositions.put('x', new Point(3, 5));
-		fontPositions.put('y', new Point(4, 5));
-		fontPositions.put('z', new Point(5, 5));
-
-		fontPositions.put(' ', new Point(0, 6));
-		fontPositions.put('.', new Point(1, 6));
-		fontPositions.put('!', new Point(2, 6));
-		fontPositions.put('?', new Point(3, 6));
-		fontPositions.put(',', new Point(4, 6));
-		fontPositions.put('/', new Point(5, 6));
-		fontPositions.put('"', new Point(6, 6));
-		fontPositions.put('\'', new Point(7, 6));
-		fontPositions.put('-', new Point(8, 6));
-		fontPositions.put('+', new Point(9, 6));
-
-		fontPositions.put('1', new Point(0, 7));
-		fontPositions.put('2', new Point(1, 7));
-		fontPositions.put('3', new Point(2, 7));
-		fontPositions.put('4', new Point(3, 7));
-		fontPositions.put('5', new Point(4, 7));
-		fontPositions.put('6', new Point(5, 7));
-		fontPositions.put('7', new Point(6, 7));
-		fontPositions.put('8', new Point(7, 7));
-		fontPositions.put('9', new Point(8, 7));
-		fontPositions.put('0', new Point(9, 7));
-
+		loadFontPositions();
 	}
 
 	public static BufferedImage getImage(String imageName){
@@ -250,5 +175,47 @@ public class RessourceManager {
 		location = location.replace('.', File.separatorChar);
 		location = directoryPath + "res" + File.separator + location + ".png";
 		return location;
+	}
+
+	private static void loadFontPositions(){
+		File fontPositionsFile = new File(determineDirectoryPath() + "res" + File.separator + "fonts" + File.separator + "fontPositions");
+		fontPositions = new HashMap<Character, Point>();
+
+		if(fontPositionsFile.isFile()){
+			try {
+				BufferedReader fontPositionsReader = new BufferedReader(new FileReader(fontPositionsFile));
+
+				String fontPositionsString = "";
+				while((fontPositionsString = fontPositionsReader.readLine()) != null){
+					if(fontPositionsString.length() > 0){
+						char font = fontPositionsString.charAt(0);
+						fontPositionsString = fontPositionsString.substring(2);
+
+						String[] coordinates = fontPositionsString.split(" ");
+						if(coordinates.length > 1){
+							int x = -1, y = -1;
+
+							try {x = Integer.parseInt(coordinates[0]);
+							} catch (NumberFormatException e) {
+								System.out.println("Error: Failed to convert to int: " + coordinates[0]);
+								e.printStackTrace();
+							}
+
+							try {y = Integer.parseInt(coordinates[1]);
+							} catch (NumberFormatException e) {
+								System.out.println("Error: Failed to convert to int: " + coordinates[1]);
+								e.printStackTrace();
+							}
+
+							if(x>-1 && y>-1){
+								Point p = new Point(x, y);
+								fontPositions.put(font, p);
+							}
+						}
+					}
+				}
+				fontPositionsReader.close();
+			} catch (IOException e) {e.printStackTrace();}
+		}
 	}
 }
