@@ -89,6 +89,10 @@ public class RessourceManager {
 		fontPositions.put('?', new Point(3, 6));
 		fontPositions.put(',', new Point(4, 6));
 		fontPositions.put('/', new Point(5, 6));
+		fontPositions.put('"', new Point(6, 6));
+		fontPositions.put('\'', new Point(7, 6));
+		fontPositions.put('-', new Point(8, 6));
+		fontPositions.put('+', new Point(9, 6));
 
 		fontPositions.put('1', new Point(0, 7));
 		fontPositions.put('2', new Point(1, 7));

@@ -16,7 +16,7 @@ public class TitleScreenState extends BaseState{
 	public void drawMe(Graphics g) {
 		g.drawImage(RessourceManager.getImage("misc.title"), 0, 0, null);
 		
-		BufferedImage pressXText = RessourceManager.getFontifiedText("Press X to enter the Game", "standard");
+		BufferedImage pressXText = RessourceManager.getFontifiedText("Press 'X' to enter the Game", "standard");
 		
 		g.drawImage(pressXText, 400 - (pressXText.getWidth() / 2), 400, null);
 	}
