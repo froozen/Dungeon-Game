@@ -35,13 +35,7 @@ public class DungeonMapState implements BaseState{
 		
 		activeMap.updateParticles();
 		
-		if(GameInput.wasKeyPressed("X")){
-			MenuStackState menuStackState = new MenuStackState();
-			menuStackState.addMenu(new PauseMenu());
-			
-			GameStateManager.changeForegroundState(menuStackState);
-			GameStateManager.changeGameStateFocus(GameStateFocus.FOREGROUND);
-		}
+		checkForMenus();
 	}
 	
 	public void drawMe(Graphics g) {
@@ -88,6 +82,16 @@ public class DungeonMapState implements BaseState{
 		for(BattleEntity entity:removeList){
 			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
 			activeMap.entitys.remove(entity);
+		}
+	}
+	
+	private void checkForMenus(){
+		if(GameInput.wasKeyPressed("X")){
+			MenuStackState menuStackState = new MenuStackState();
+			menuStackState.addMenu(new PauseMenu());
+			
+			GameStateManager.changeForegroundState(menuStackState);
+			GameStateManager.changeGameStateFocus(GameStateFocus.FOREGROUND);
 		}
 	}
 }
