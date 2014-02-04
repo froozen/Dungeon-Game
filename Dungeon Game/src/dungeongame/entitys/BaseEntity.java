@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import dungeongame.GameVariables;
 import dungeongame.RessourceManager;
 import dungeongame.basetypes.GameMap;
 
@@ -21,14 +22,11 @@ public abstract class BaseEntity {
 
 	protected int lastCyclePhase;
 
-	private static long lastTime;
-	public static double timeSinceLastFrame;
+	
 
 	public abstract void initializeMovement();
 
-	static{
-		lastTime = System.currentTimeMillis();
-	}
+	
 
 	public BaseEntity(Point position, GameMap locationMap){
 		this.locationMap = locationMap;
@@ -48,10 +46,7 @@ public abstract class BaseEntity {
 		DOWN, RIGHT, UP, LEFT
 	}
 
-	public static void updateTimeSinceLastFrame(){
-		timeSinceLastFrame = ((double)(System.currentTimeMillis() - lastTime) / 1000);
-		lastTime = System.currentTimeMillis();
-	}
+	
 
 	public void drawMe(Graphics g){
 		loadSprite();
@@ -120,7 +115,7 @@ public abstract class BaseEntity {
 		if (moving){
 			if(direction == Direction.UP){
 				if(y>position.y){
-					y -= timeSinceLastFrame * speed;
+					y -= GameVariables.timeSinceLastFrame * speed;
 				}
 				if(!(y>position.y)){
 					moving = false;
@@ -129,7 +124,7 @@ public abstract class BaseEntity {
 			}
 			else if(direction == Direction.LEFT){
 				if(x>position.x){
-					x -= timeSinceLastFrame * speed;
+					x -=GameVariables.timeSinceLastFrame * speed;
 				}
 				if(!(x>position.x)){
 					moving = false;
@@ -138,7 +133,7 @@ public abstract class BaseEntity {
 			}
 			else if(direction == Direction.DOWN){
 				if(y<position.y){
-					y += timeSinceLastFrame * speed;
+					y +=GameVariables.timeSinceLastFrame * speed;
 				}
 				if(!(y<position.y)){
 					moving = false;
@@ -147,7 +142,7 @@ public abstract class BaseEntity {
 			}
 			else if(direction == Direction.RIGHT){
 				if(x<position.x){
-					x += timeSinceLastFrame * speed;
+					x +=GameVariables.timeSinceLastFrame * speed;
 				}
 				if(!(x<position.x)){
 					moving = false;

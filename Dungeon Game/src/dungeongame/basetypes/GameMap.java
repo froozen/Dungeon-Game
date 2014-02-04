@@ -64,9 +64,7 @@ public class GameMap {
 		
 	}
 	
-	public void updateParticles(){
-		BaseParticle.updateTimeSinceLastFrame();
-		
+	public void updateParticles(){		
 		ArrayList<BaseParticle> removeParticles = new ArrayList<BaseParticle>();
 		for(BaseParticle particle:particles){
 			particle.updatePosition();

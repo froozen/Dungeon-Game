@@ -3,6 +3,7 @@ package dungeongame.particles;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import dungeongame.GameVariables;
 import dungeongame.RessourceManager;
 
 public class DamageNumberParticle extends BaseParticle{
@@ -20,8 +21,8 @@ public class DamageNumberParticle extends BaseParticle{
 	}
 	
 	public void updatePosition() {
-		passedTime += timeSinceLastFrame;
-		if(passedTime < 0.5)y -= timeSinceLastFrame * speed;
+		passedTime +=GameVariables.timeSinceLastFrame;
+		if(passedTime < 0.5)y -=GameVariables.timeSinceLastFrame * speed;
 		else remove = true;
 	}
 

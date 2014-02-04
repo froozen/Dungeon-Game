@@ -4,12 +4,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import dungeongame.GameInput;
 import dungeongame.GameStateManager;
+import dungeongame.GameStateManager.GameStateFocus;
 import dungeongame.basetypes.GameMap;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.BattleEntity;
 import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
+import dungeongame.menus.PauseMenu;
 
 public class DungeonMapState extends BaseState{
 	public GameMap activeMap;
@@ -26,13 +29,19 @@ public class DungeonMapState extends BaseState{
 	}
 
 	public void computeNextFrame() {
-		BaseEntity.updateTimeSinceLastFrame();
-
 		initializeMovements();
 		updatePositions();
 		removeEntities();
 		
 		activeMap.updateParticles();
+		
+		if(GameInput.wasKeyPressed("X")){
+			MenuStackState menuStackState = new MenuStackState();
+			menuStackState.addMenu(new PauseMenu());
+			
+			GameStateManager.changeForegroundState(menuStackState);
+			GameStateManager.changeGameStateFocus(GameStateFocus.FOREGROUND);
+		}
 	}
 	
 	public void drawMe(Graphics g) {
