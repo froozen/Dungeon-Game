@@ -5,11 +5,12 @@ import java.util.ArrayList;
 
 import dungeongame.menus.BaseMenu;
 
-public class MenuStackState extends BaseState{
+public class MenuStackState implements BaseState{
 	private ArrayList<BaseMenu> menuStack;
 
 	public MenuStackState(){
 		menuStack = new ArrayList<BaseMenu>();
+		addMenu(new HUDState());
 	}
 	
 	public void drawMe(Graphics g) {

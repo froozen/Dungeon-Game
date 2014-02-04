@@ -14,7 +14,7 @@ import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
 import dungeongame.menus.PauseMenu;
 
-public class DungeonMapState extends BaseState{
+public class DungeonMapState implements BaseState{
 	public GameMap activeMap;
 	private Player player;
 

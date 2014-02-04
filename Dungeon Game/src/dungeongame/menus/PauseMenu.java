@@ -9,7 +9,7 @@ import dungeongame.RessourceManager;
 import dungeongame.GameStateManager.GameStateFocus;
 import dungeongame.states.HUDState;
 
-public class PauseMenu extends BaseMenu {
+public class PauseMenu implements BaseMenu {
 	private BufferedImage backGround, text;
 	
 	public PauseMenu(){

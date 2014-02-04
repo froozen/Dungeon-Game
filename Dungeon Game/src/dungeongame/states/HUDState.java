@@ -5,8 +5,9 @@ import java.awt.image.BufferedImage;
 
 import dungeongame.GameVariables;
 import dungeongame.RessourceManager;
+import dungeongame.menus.BaseMenu;
 
-public class HUDState extends BaseState{
+public class HUDState implements BaseState, BaseMenu{
 
 	public void drawMe(Graphics g) {
 		BufferedImage text = RessourceManager.getFontifiedText("Demo text", "outline");

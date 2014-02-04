@@ -7,7 +7,7 @@ import dungeongame.GameInput;
 import dungeongame.GameStateManager;
 import dungeongame.RessourceManager;
 
-public class TitleScreenState extends BaseState{
+public class TitleScreenState implements BaseState{
 
 	public TitleScreenState(){
 		RessourceManager.loadTileSet("testtile");
