@@ -22,8 +22,10 @@ public class DamageNumberParticle extends BaseParticle{
 	
 	public void updatePosition() {
 		passedTime +=GameVariables.timeSinceLastFrame;
-		if(passedTime < 0.5)y -=GameVariables.timeSinceLastFrame * speed;
-		else remove = true;
+		
+		if(passedTime < 0.2)y -=GameVariables.timeSinceLastFrame * speed;
+		else if(passedTime < 0.4)y +=GameVariables.timeSinceLastFrame * speed;
+		else if(passedTime > 0.5) remove = true;
 	}
 
 	public void drawMe(Graphics g) {
