@@ -102,8 +102,8 @@ public class RessourceManager {
 
 		BufferedImage fontMap = getImage("fonts." + font);
 		int fontWidth = fontMap.getWidth() / 10;
-		int fontHeight = fontMap.getHeight() / 8;
-
+		int fontHeight = fontMap.getHeight() / 9;
+		
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
 
 		Graphics textImageGraphics = textImage.getGraphics();
@@ -129,7 +129,7 @@ public class RessourceManager {
 
 		BufferedImage fontMap = getImage("fonts." + font);
 		int fontWidth = fontMap.getWidth() / 10;
-		int fontHeight = fontMap.getHeight() / 8;
+		int fontHeight = fontMap.getHeight() / 9;
 		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
 
 		Graphics textImageGraphics = textImage.getGraphics();

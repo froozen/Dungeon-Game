@@ -19,6 +19,9 @@ public class HUDState implements BaseState, BaseMenu{
 		renderPlayerMPBar(g);
 		
 		g.drawImage(RessourceManager.getImage("hud.overlay"), 0, 0, null);
+		
+		BufferedImage level = RessourceManager.getFontifiedText("LV:" + GameVariables.playerBattleStats.level, "outline");
+		g.drawImage(level, 5, 5, null);
 	}
 
 	//UNUSED
