@@ -32,4 +32,8 @@ public class Player extends BattleEntity{
 			else if(GameInput.wasKeyDown("Space"))attack(direction);
 		}
 	}
+
+	//UNUSED
+	public void die() {		
+	}
 }

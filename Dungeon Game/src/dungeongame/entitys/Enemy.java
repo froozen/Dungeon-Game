@@ -3,6 +3,7 @@ package dungeongame.entitys;
 import java.awt.Point;
 
 import dungeongame.BattleStats;
+import dungeongame.GameVariables;
 import dungeongame.basetypes.GameMap;
 
 public class Enemy extends BattleEntity{
@@ -42,6 +43,10 @@ public class Enemy extends BattleEntity{
 			}
 		}
 		else System.out.println("Error: Cannot find Player in locationMap.entitys");
+	}
+
+	public void die() {
+		GameVariables.playerBattleStats.gainExp(15);
 	}
 
 }
