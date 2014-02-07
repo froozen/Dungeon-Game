@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
 import dungeongame.GameStateManager.GameStateFocus;
+import dungeongame.basetypes.DungeonMap;
 import dungeongame.basetypes.GameMap;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.BattleEntity;
@@ -21,11 +22,11 @@ public class DungeonMapState implements BaseState{
 	public DungeonMapState(){
 		GameStateManager.changeForegroundState(new HUDState());
 		
-		activeMap = new GameMap(25,19);
+		activeMap = new DungeonMap(25,19);
 
-		player = new Player(new Point(1,1), activeMap);
+		player = new Player(new Point(10,10), activeMap);
 		activeMap.entitys.add(player);
-		activeMap.entitys.add(new Enemy(new Point(1, 4), activeMap));
+		activeMap.entitys.add(new Enemy(new Point(12, 5), activeMap));
 	}
 
 	public void computeNextFrame() {
