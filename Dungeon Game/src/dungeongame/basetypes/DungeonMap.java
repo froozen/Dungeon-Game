@@ -1,6 +1,7 @@
 package dungeongame.basetypes;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,13 +10,17 @@ public class DungeonMap extends GameMap{
 
 	public DungeonMap(int width, int height) {
 		super(width, height);
+		
+		boolean validLayout = true;
+		while(validLayout){
+			createStartRooms();
+			expandRooms();
 
-		createStartRooms();
-		expandRooms();
-
+			validLayout = !checkRoomValidity();
+		}
 		updateTiles();
+		
 	}
-
 
 	private void createStartRooms(){
 		ArrayList<Point> points = new ArrayList<Point>();
@@ -75,91 +80,47 @@ public class DungeonMap extends GameMap{
 	}
 
 	private boolean tryExpandingRoomUp(DungeonRoom room){
-		boolean expanded = false;
-
-		int y = room.space.y - 1;
-		if(y > 0){
-			expanded = true;
-			for(int x = room.space.x; x < room.space.x + room.space.width; x++){
-				if(roomsContain(new Point(x , y)))expanded = false;
-			}
-
-			y--;
-			for(int x = room.space.x; x < room.space.x + room.space.width; x++){
-				if(roomsContain(new Point(x , y)))expanded = false;
+		if(room.space.y > 1){
+			Rectangle testRectangle = new Rectangle(room.space.x - 1, room.space.y -2, room.space.width + 2, 2);
+			if(!roomsContain(testRectangle)){
+				room.expandUp();
+				return true;
 			}
 		}
-		if(expanded){
-			room.expandUp();
-		}
-
-		return expanded;
+		return false;
 	}
 
 	private boolean tryExpandingRoomDown(DungeonRoom room){
-		boolean expanded = false;
-
-		int y = room.space.y + room.space.height;
-		if(y < height - 1){
-			expanded = true;
-			for(int x = room.space.x; x < room.space.x + room.space.width; x++){
-				if(roomsContain(new Point(x , y)))expanded = false;
-			}
-
-			y++;
-			for(int x = room.space.x; x < room.space.x + room.space.width; x++){
-				if(roomsContain(new Point(x , y)))expanded = false;
+		if(room.space.y + room.space.height < height - 1){
+			Rectangle testRectangle = new Rectangle(room.space.x - 1, room.space.y + room.space.height, room.space.width + 2, 2);
+			if(!roomsContain(testRectangle)){
+				room.expandDown();
+				return true;
 			}
 		}
-		if(expanded){
-			room.expandDown();
-		}
-
-		return expanded;
+		return false;
 	}
-
+		
 	private boolean tryExpandingRoomToTheLeft(DungeonRoom room){
-		boolean expanded = false;
-
-		int x = room.space.x - 1;
-		if(x > 0){
-			expanded = true;
-			for(int y = room.space.y; y < room.space.y + room.space.height; y++){
-				if(roomsContain(new Point(x , y)))expanded = false;
-			}
-
-			x--;
-			for(int y = room.space.y; y < room.space.y + room.space.height; y++){
-				if(roomsContain(new Point(x , y)))expanded = false;
+		if(room.space.x > 1){
+			Rectangle testRectangle = new Rectangle(room.space.x - 2, room.space.y - 1, 2, room.space.height + 2);
+			if(!roomsContain(testRectangle)){
+				room.expandToTheLeft();
+				return true;
 			}
 		}
-		if(expanded){
-			room.expandToTheLeft();
-		}
-
-		return expanded;
+		return false;
 	}
 
 	private boolean tryExpandingRoomToTheRight(DungeonRoom room){
-		boolean expanded = false;
-
-		int x = room.space.x + room.space.width + 1;
-		if(x < width){
-			expanded = true;
-			for(int y = room.space.y; y < room.space.y + room.space.height; y++){
-				if(roomsContain(new Point(x , y)))expanded = false;
-			}
-
-			x++;
-			for(int y = room.space.y; y < room.space.y + room.space.height; y++){
-				if(roomsContain(new Point(x , y)))expanded = false;
+		if(room.space.x + room.space.width < width -1){
+			Rectangle testRectangle = new Rectangle(room.space.x + room.space.width, room.space.y - 1, 2, room.space.height + 2);
+			if(!roomsContain(testRectangle)){
+				room.expandToTheRight();
+				return true;
 			}
 		}
-		if(expanded){
-			room.expandToTheRight();
-		}
-
-		return expanded;
+		return false;
 	}
 
 	private boolean roomsContain(Point point){
@@ -168,5 +129,21 @@ public class DungeonMap extends GameMap{
 		}
 
 		return false;
+	}
+	
+	private boolean roomsContain(Rectangle rectangle){
+		for(DungeonRoom room:rooms){
+			if(room.space.intersects(rectangle))return true;
+		}
+
+		return false;
+	}
+	
+	private boolean checkRoomValidity(){
+		for(DungeonRoom room:rooms){
+			if(room.space.width < 4)return false;
+			if(room.space.height < 4)return false;
+		}
+		return true;
 	}
 }
