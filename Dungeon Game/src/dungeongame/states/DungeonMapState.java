@@ -3,6 +3,8 @@ package dungeongame.states;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
@@ -32,6 +34,7 @@ public class DungeonMapState implements BaseState{
 	public void computeNextFrame() {
 		initializeMovements();
 		updatePositions();
+		sortEntitys();
 		removeEntities();
 		
 		activeMap.updateParticles();
@@ -95,5 +98,13 @@ public class DungeonMapState implements BaseState{
 			GameStateManager.changeForegroundState(menuStackState);
 			GameStateManager.changeGameStateFocus(GameStateFocus.FOREGROUND);
 		}
+	}
+	
+	private void sortEntitys(){
+		Collections.sort(activeMap.entitys, new Comparator<BaseEntity>() {
+			public int compare(BaseEntity e1, BaseEntity e2){
+				return Double.compare(e1.y, e2.y);
+			}
+		});
 	}
 }
