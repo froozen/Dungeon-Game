@@ -46,7 +46,7 @@ public class Enemy extends BattleEntity{
 	}
 
 	public void die() {
-		GameVariables.playerBattleStats.gainExp(15);
+		GameVariables.playerBattleStats.gainExp(20);
 	}
 
 }

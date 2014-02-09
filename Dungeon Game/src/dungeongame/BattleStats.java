@@ -4,9 +4,7 @@ public class BattleStats {
 	public int hp, maxHp;
 	public int mp, maxMp;
 	public int atk, def;
-	public int level, expToNextLevel;
-	
-	private int lastExpToNextLevel;
+	public int level, expToNextLevel, lastExpToNextLevel;
 
 	public BattleStats(){
 		hp = 1;
@@ -47,6 +45,7 @@ public class BattleStats {
 			}
 			else{
 				expToNextLevel -= amount;
+				amount = 0;
 			}
 		}
 	}

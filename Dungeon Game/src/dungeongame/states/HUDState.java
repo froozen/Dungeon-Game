@@ -17,6 +17,7 @@ public class HUDState implements BaseState, BaseMenu{
 		
 		renderPlayerHPBar(g);
 		renderPlayerMPBar(g);
+		renderPlayerExpBar(g);
 		
 		g.drawImage(RessourceManager.getImage("hud.overlay"), 0, 0, null);
 		
@@ -50,5 +51,12 @@ public class HUDState implements BaseState, BaseMenu{
 		
 		g.drawImage(mpBar, 38 - mpBarOffset, 18, null);
 		g.drawImage(mpTextImage, mpTextX, 18, null);
+	}
+	
+	private void renderPlayerExpBar(Graphics g){
+		BufferedImage expBar = RessourceManager.getImage("hud.expbar");
+		int expBarOffset = expBar.getWidth() - ((int) (expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / (double)GameVariables.playerBattleStats.lastExpToNextLevel)));
+		
+		g.drawImage(expBar, 2 - expBarOffset, 32, null);
 	}
 }
