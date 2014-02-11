@@ -8,6 +8,7 @@ import java.util.Random;
 
 import dungeongame.RessourceManager;
 import dungeongame.entitys.BaseEntity;
+import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
 
 public class DungeonMap extends GameMap{
@@ -82,6 +83,8 @@ public class DungeonMap extends GameMap{
 	}
 	
 	public ArrayList<BaseEntity> getEntitysIn(DungeonRoom room){
+		if(room == null)return null;
+		
 		ArrayList<BaseEntity> returnList = new ArrayList<BaseEntity>();
 		
 		for(BaseEntity e:entitys){
@@ -271,5 +274,15 @@ public class DungeonMap extends GameMap{
 		Point playerSpawnPoint = new Point(playerSpawnRoom.space.x + random.nextInt(playerSpawnRoom.space.width), playerSpawnRoom.space.y + random.nextInt(playerSpawnRoom.space.height));
 		Player player = new Player(playerSpawnPoint, this);
 		entitys.add(player);
+		
+		DungeonRoom enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
+		Point enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
+		
+		while(occupied[enemySpawnPoint.x][enemySpawnPoint.y]){
+			enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
+		}
+		
+		Enemy enemy = new Enemy(enemySpawnPoint, this);
+		entitys.add(enemy);
 	}
 }

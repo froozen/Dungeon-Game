@@ -53,9 +53,12 @@ public class DungeonMapState implements BaseState{
 			player.initializeMovement();
 
 			if(player.moving){
-				for(BaseEntity entity:activeMap.entitys){
-					if(entity != player){
-						entity.initializeMovement();
+				ArrayList<BaseEntity> valuableEntitys = activeMap.getEntitysIn(activeMap.getRoomThatContains(player));
+				if(valuableEntitys != null){
+					for(BaseEntity entity:valuableEntitys){
+						if(entity != player){
+							entity.initializeMovement();
+						}
 					}
 				}
 			}
@@ -63,9 +66,13 @@ public class DungeonMapState implements BaseState{
 	}
 
 	private void updatePositions(){
-		for(BaseEntity e:activeMap.entitys){
-			e.computeNextPosition();
+		ArrayList<BaseEntity> valuableEntitys = activeMap.getEntitysIn(activeMap.getRoomThatContains(player));
+		if(valuableEntitys != null){
+			for(BaseEntity entity:valuableEntitys){
+					entity.computeNextPosition();
+			}
 		}
+		else player.computeNextPosition();
 	}
 	
 	private void removeEntities(){
