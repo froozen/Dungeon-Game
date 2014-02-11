@@ -16,14 +16,7 @@ public class Enemy extends BattleEntity{
 	}
 	
 	public void initializeMovement() {
-		Player prey = null;
-		
-		for(BaseEntity entity:locationMap.entitys){
-			if(entity instanceof Player){
-				prey = (Player) entity;
-				break;
-			}
-		}
+		Player prey = locationMap.getPlayer();
 		
 		if(prey != null){
 			if(prey.position.x == position.x){

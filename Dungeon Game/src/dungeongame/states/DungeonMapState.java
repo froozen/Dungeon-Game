@@ -10,15 +10,13 @@ import dungeongame.GameInput;
 import dungeongame.GameStateManager;
 import dungeongame.GameStateManager.GameStateFocus;
 import dungeongame.basetypes.DungeonMap;
-import dungeongame.basetypes.GameMap;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.BattleEntity;
-import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
 import dungeongame.menus.PauseMenu;
 
 public class DungeonMapState implements BaseState{
-	public GameMap activeMap;
+	public DungeonMap activeMap;
 	private Player player;
 
 	public DungeonMapState(){
@@ -28,7 +26,7 @@ public class DungeonMapState implements BaseState{
 
 		player = new Player(new Point(10,10), activeMap);
 		activeMap.entitys.add(player);
-		activeMap.entitys.add(new Enemy(new Point(12, 5), activeMap));
+//		activeMap.entitys.add(new Enemy(new Point(12, 5), activeMap));
 	}
 
 	public void computeNextFrame() {

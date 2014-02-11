@@ -1,6 +1,7 @@
 package dungeongame;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -34,6 +35,10 @@ public class GameFrame extends JFrame{
 	
 	public void refresh(){
 		Graphics g = gameCanvasBufferStrategy.getDrawGraphics();
+		
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 800, 600);
+		
 		GameStateManager.drawCurrentGameState(g);
 		g.dispose();
 		gameCanvasBufferStrategy.show();

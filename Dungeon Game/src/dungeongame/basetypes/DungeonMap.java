@@ -1,9 +1,13 @@
 package dungeongame.basetypes;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
+
+import dungeongame.RessourceManager;
+import dungeongame.entitys.BaseEntity;
 
 public class DungeonMap extends GameMap{
 	public ArrayList<DungeonRoom> rooms;
@@ -22,6 +26,69 @@ public class DungeonMap extends GameMap{
 		createLinks();
 		updateTiles();
 
+	}
+	
+	public void drawMe(Graphics g){
+		DungeonRoom targetRoom = getRoomThatContains(getPlayer());
+		if(targetRoom != null){
+			ArrayList<BaseEntity> targetEntitys = getEntitysIn(targetRoom);
+			Rectangle targetRectangle = new Rectangle(targetRoom.space.x - 1, targetRoom.space.y -1, targetRoom.space.width + 2, targetRoom.space.height +2);
+			
+			for(int x = targetRectangle.x; x < targetRectangle.x + targetRectangle.width; x++){
+				for(int y = targetRectangle.y ; y < targetRectangle.y + targetRectangle.height; y++){
+					g.drawImage(RessourceManager.getTile(tiles[x][y]), x * RessourceManager.tileSize, y * RessourceManager.tileSize, null);
+				}
+			}
+			
+			for(BaseEntity e:targetEntitys){
+				e.drawMe(g);
+			}
+		}
+		else{
+			Point playerPosition = getPlayer().position;
+			
+			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y]), playerPosition.x * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
+			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x - 1][playerPosition.y]), (playerPosition.x - 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
+			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x + 1][playerPosition.y]), (playerPosition.x + 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
+			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y - 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y - 1) * RessourceManager.tileSize, null);
+			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y + 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y + 1) * RessourceManager.tileSize, null);
+			
+			getPlayer().drawMe(g);
+		}
+	}
+	
+	public boolean roomsContain(Point point){
+		for(DungeonRoom room:rooms){
+			if(room.space.contains(point))return true;
+		}
+
+		return false;
+	}
+
+	public boolean roomsContain(Rectangle rectangle){
+		for(DungeonRoom room:rooms){
+			if(room.space.intersects(rectangle))return true;
+		}
+
+		return false;
+	}
+	
+	public DungeonRoom getRoomThatContains(BaseEntity  e){
+		for(DungeonRoom room:rooms){
+			if(room.space.contains(e.position))return room;
+		}
+		return null;
+	}
+	
+	public ArrayList<BaseEntity> getEntitysIn(DungeonRoom room){
+		ArrayList<BaseEntity> returnList = new ArrayList<BaseEntity>();
+		
+		for(BaseEntity e:entitys){
+			if(room.space.contains(e.position))returnList.add(e);
+		}
+		
+		if(returnList.size() > 0)return returnList;
+		else return null;
 	}
 
 	private void createStartRooms(){
@@ -170,26 +237,13 @@ public class DungeonMap extends GameMap{
 		for(int x = 0; x < tiles.length; x++){
 			for(int y = 0; y < tiles[x].length; y++){
 				if(!roomsContain(new Point(x, y))){
-					if(!links.contains(new Point(x, y)))tiles[x][y] = 2;
+					if(!links.contains(new Point(x, y))){
+						tiles[x][y] = 2;
+						occupied[x][y] = true;
+					}
 				}
 			}
 		}
-	}
-
-	private boolean roomsContain(Point point){
-		for(DungeonRoom room:rooms){
-			if(room.space.contains(point))return true;
-		}
-
-		return false;
-	}
-
-	private boolean roomsContain(Rectangle rectangle){
-		for(DungeonRoom room:rooms){
-			if(room.space.intersects(rectangle))return true;
-		}
-
-		return false;
 	}
 
 	private boolean checkRoomValidity(){

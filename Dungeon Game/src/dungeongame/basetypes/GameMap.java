@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import dungeongame.RessourceManager;
 import dungeongame.entitys.BaseEntity;
+import dungeongame.entitys.Player;
 import dungeongame.particles.BaseParticle;
 
 public class GameMap {
@@ -62,6 +63,13 @@ public class GameMap {
 		
 		for(BaseParticle particle:particles)particle.drawMe(g);
 		
+	}
+	
+	public Player getPlayer(){
+		for(BaseEntity e:entitys){
+			if(e instanceof Player)return (Player)e;
+		}
+		return null;
 	}
 	
 	public void updateParticles(){		
