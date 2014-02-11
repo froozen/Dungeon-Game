@@ -1,7 +1,6 @@
 package dungeongame.states;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,8 +23,7 @@ public class DungeonMapState implements BaseState{
 		
 		activeMap = new DungeonMap(25,19);
 
-		player = new Player(new Point(10,10), activeMap);
-		activeMap.entitys.add(player);
+		player = activeMap.getPlayer();
 //		activeMap.entitys.add(new Enemy(new Point(12, 5), activeMap));
 	}
 

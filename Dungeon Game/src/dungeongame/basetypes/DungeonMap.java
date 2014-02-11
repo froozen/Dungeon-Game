@@ -8,6 +8,7 @@ import java.util.Random;
 
 import dungeongame.RessourceManager;
 import dungeongame.entitys.BaseEntity;
+import dungeongame.entitys.Player;
 
 public class DungeonMap extends GameMap{
 	public ArrayList<DungeonRoom> rooms;
@@ -25,7 +26,7 @@ public class DungeonMap extends GameMap{
 		}
 		createLinks();
 		updateTiles();
-
+		fillRooms();
 	}
 	
 	public void drawMe(Graphics g){
@@ -261,5 +262,14 @@ public class DungeonMap extends GameMap{
 			if(room.space.intersects(space))intersectingRooms.add(room);
 		}
 		return intersectingRooms;
+	}
+	
+	private void fillRooms(){
+		Random random = new Random();
+		
+		DungeonRoom playerSpawnRoom = rooms.get(random.nextInt(rooms.size()));
+		Point playerSpawnPoint = new Point(playerSpawnRoom.space.x + random.nextInt(playerSpawnRoom.space.width), playerSpawnRoom.space.y + random.nextInt(playerSpawnRoom.space.height));
+		Player player = new Player(playerSpawnPoint, this);
+		entitys.add(player);
 	}
 }
