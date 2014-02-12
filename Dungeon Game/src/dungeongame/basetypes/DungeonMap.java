@@ -10,6 +10,7 @@ import dungeongame.RessourceManager;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.Enemy;
 import dungeongame.entitys.Player;
+import dungeongame.particles.BaseParticle;
 
 public class DungeonMap extends GameMap{
 	public ArrayList<DungeonRoom> rooms;
@@ -57,6 +58,8 @@ public class DungeonMap extends GameMap{
 			
 			getPlayer().drawMe(g);
 		}
+		
+		for(BaseParticle particle:particles)particle.drawMe(g);
 	}
 	
 	public boolean roomsContain(Point point){
