@@ -38,7 +38,7 @@ public class Enemy extends BattleEntity{
 		else System.out.println("Error: Cannot find Player in locationMap.entitys");
 	}
 
-	public void die() {
+	public void uponDeath() {
 		GameVariables.playerBattleStats.gainExp(20);
 	}
 

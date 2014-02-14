@@ -10,7 +10,7 @@ import dungeongame.particles.DamageNumberParticle;
 public abstract class BattleEntity extends BaseEntity{
 	public BattleStats battleStats;
 	
-	public abstract void die();
+	public abstract void uponDeath();
 	
 	public BattleEntity(Point position, GameMap locationMap) {
 		super(position, locationMap);

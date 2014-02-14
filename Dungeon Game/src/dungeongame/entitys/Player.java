@@ -34,6 +34,6 @@ public class Player extends BattleEntity{
 	}
 
 	//UNUSED
-	public void die() {		
+	public void uponDeath() {		
 	}
 }

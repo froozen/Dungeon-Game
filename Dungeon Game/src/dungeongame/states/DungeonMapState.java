@@ -88,7 +88,7 @@ public class DungeonMapState implements BaseState{
 
 		for(BattleEntity entity:removeList){
 			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
-			entity.die();
+			entity.uponDeath();
 			activeMap.entitys.remove(entity);
 		}
 	}
