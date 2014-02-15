@@ -21,6 +21,7 @@ public class InventoryMenu implements BaseMenu{
 		g.drawImage(backgroundImage, 100, 100, null);
 		
 		renderPlayerStats(g);
+		renderPlayerBars(g);
 	}
 
 	public void computeNextFrame() {
@@ -37,16 +38,16 @@ public class InventoryMenu implements BaseMenu{
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.atk, "standard");
 		g.drawImage(statsImage, 615 - statsImage.getWidth(), 225, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 560, 237, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.def, "standard");
+		g.drawImage(RessourceManager.getFontifiedText("DEX:", "standard"), 560, 237, null);
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.dex, "standard");
 		g.drawImage(statsImage, 615 - statsImage.getWidth(), 237, null);
 		
 		g.drawImage(RessourceManager.getFontifiedText("STR:", "standard"), 560, 249, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.str, "standard");
 		g.drawImage(statsImage, 615 - statsImage.getWidth(), 249, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("DEX:", "standard"), 622, 225, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.dex, "standard");
+		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 622, 225, null);
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.def, "standard");
 		g.drawImage(statsImage, 685 - statsImage.getWidth(), 225, null);
 		
 		g.drawImage(RessourceManager.getFontifiedText("LUK:", "standard"), 622, 237, null);
@@ -56,5 +57,25 @@ public class InventoryMenu implements BaseMenu{
 		g.drawImage(RessourceManager.getFontifiedText("MAG:", "standard"), 622, 249, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.mag, "standard");
 		g.drawImage(statsImage, 685 - statsImage.getWidth(), 249, null);
+	}
+	
+	private void renderPlayerBars(Graphics g){
+		BufferedImage hpBar = RessourceManager.getImage("ui.inventory.hpbar");
+		int hpRestWidth = (int)(hpBar.getWidth() * ((double)(GameVariables.playerBattleStats.hp / (double)GameVariables.playerBattleStats.maxHp)));
+		hpBar = hpBar.getSubimage(hpBar.getWidth() - hpRestWidth, 0, hpRestWidth, hpBar.getHeight());
+		g.drawImage(hpBar, 552, 262, null);
+		
+		BufferedImage mpBar = RessourceManager.getImage("ui.inventory.mpbar");
+		int mpRestWidth = (int)(mpBar.getWidth() * ((double)(GameVariables.playerBattleStats.mp / (double)GameVariables.playerBattleStats.maxMp)));
+		mpBar = mpBar.getSubimage(mpBar.getWidth() - mpRestWidth, 0, mpRestWidth, mpBar.getHeight());
+		g.drawImage(mpBar, 552, 292, null);
+		
+		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
+		
+		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
+		if(expRestWidth > 0){
+			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
+			g.drawImage(expBar, 552, 322, null);
+		}
 	}
 }
