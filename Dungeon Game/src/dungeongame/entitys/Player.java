@@ -14,7 +14,23 @@ public class Player extends BattleEntity{
 		super(position, locationMap);
 
 		if(GameVariables.playerBattleStats == null){
-			battleStats = new BattleStats(200, 100, 5, 5);
+			battleStats = new BattleStats();
+			battleStats.atk = 5;
+			battleStats.def = 5;
+			
+			battleStats.maxHp = 200;
+			battleStats.hp = battleStats.maxHp;
+			battleStats.maxMp = 150;
+			battleStats.mp = battleStats.maxMp;
+			
+			battleStats.expToNextLevel = 15;
+			battleStats.lastExpToNextLevel = battleStats.expToNextLevel;
+			
+			battleStats.str = 4;
+			battleStats.mag = 4;
+			battleStats.dex = 4;
+			battleStats.luk = 4;
+			
 			GameVariables.playerBattleStats = battleStats;
 			battleStats.dealDamage(50);
 		}

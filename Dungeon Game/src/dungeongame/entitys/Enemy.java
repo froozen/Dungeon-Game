@@ -12,7 +12,13 @@ public class Enemy extends BattleEntity{
 		super(position, location);
 		spriteLocation = "sprites.enemy";
 		
-		battleStats = new BattleStats(30, 5, 7, 3);
+		battleStats = new BattleStats();
+		battleStats.atk = 7;
+		battleStats.def = 3;
+		battleStats.maxHp = 30;
+		battleStats.hp = 30;
+		battleStats.maxMp = 15;
+		battleStats.mp = 15;
 	}
 	
 	public void initializeMovement() {
@@ -20,12 +26,24 @@ public class Enemy extends BattleEntity{
 		
 		if(prey != null){
 			if(prey.position.x == position.x){
-				if(prey.position.y - position.y == -1)attack(Direction.UP);
-				else if(prey.position.y - position.y == 1)attack(Direction.DOWN);
+				if(prey.position.y - position.y == -1){
+					direction = Direction.UP;
+					attack(direction);
+				}
+				else if(prey.position.y - position.y == 1){
+					direction = Direction.DOWN;
+					attack(direction);
+				}
 			}
 			else if(prey.position.y == position.y){
-				if(prey.position.x - position.x == 1)attack(Direction.LEFT);
-				else if(prey.position.x - position.x == -1)attack(Direction.RIGHT);
+				if(prey.position.x - position.x == 1){
+					direction = Direction.LEFT;
+					attack(direction);
+				}
+				else if(prey.position.x - position.x == -1){
+					direction = Direction.RIGHT;
+					attack(direction);
+				}
 			}
 			
 			if(!moving){

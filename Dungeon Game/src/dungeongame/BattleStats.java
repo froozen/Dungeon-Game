@@ -4,6 +4,7 @@ public class BattleStats {
 	public int hp, maxHp;
 	public int mp, maxMp;
 	public int atk, def;
+	public int str, dex, mag, luk;
 	public int level, expToNextLevel, lastExpToNextLevel;
 
 	public BattleStats(){
@@ -15,20 +16,10 @@ public class BattleStats {
 		def = 1;
 		level = 1;
 		expToNextLevel = 1;
-	}
-
-	public BattleStats(int maxHp, int maxMp, int atk, int def){
-		this.maxHp = maxHp;
-		this.hp = maxHp;
-		this.maxMp = maxMp;
-		this.mp = maxMp;
-		this.atk = atk;
-		this.def = def;
-
-		level = 1;
-		expToNextLevel = 15;
-		
-		lastExpToNextLevel = expToNextLevel;
+		str = 1;
+		dex = 1;
+		mag = 1;
+		luk = 1;
 	}
 
 	public void dealDamage(int atk){

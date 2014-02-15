@@ -12,7 +12,7 @@ import dungeongame.basetypes.DungeonMap;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.BattleEntity;
 import dungeongame.entitys.Player;
-import dungeongame.menus.PauseMenu;
+import dungeongame.menus.InventoryMenu;
 
 public class DungeonMapState implements BaseState{
 	public DungeonMap activeMap;
@@ -24,7 +24,6 @@ public class DungeonMapState implements BaseState{
 		activeMap = new DungeonMap(25,19);
 
 		player = activeMap.getPlayer();
-//		activeMap.entitys.add(new Enemy(new Point(12, 5), activeMap));
 	}
 
 	public void computeNextFrame() {
@@ -96,7 +95,7 @@ public class DungeonMapState implements BaseState{
 	private void checkForMenus(){
 		if(GameInput.wasKeyPressed("X")){
 			MenuStackState menuStackState = new MenuStackState();
-			menuStackState.addMenu(new PauseMenu());
+			menuStackState.addMenu(new InventoryMenu());
 			
 			GameStateManager.changeForegroundState(menuStackState);
 			GameStateManager.changeGameStateFocus(GameStateFocus.FOREGROUND);
