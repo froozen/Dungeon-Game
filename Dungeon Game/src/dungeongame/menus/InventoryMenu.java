@@ -22,6 +22,7 @@ public class InventoryMenu implements BaseMenu{
 		
 		renderPlayerStats(g);
 		renderPlayerBars(g);
+		renderPlayerLeveling(g);
 	}
 
 	public void computeNextFrame() {
@@ -77,5 +78,17 @@ public class InventoryMenu implements BaseMenu{
 			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
 			g.drawImage(expBar, 552, 322, null);
 		}
+	}
+	
+	private void renderPlayerLeveling(Graphics g){
+		BufferedImage levelImage;
+		
+		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 333, null);
+		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.level, "standard");
+		g.drawImage(levelImage, 610 - levelImage.getWidth(), 333, null);
+		
+		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 333, null);
+		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
+		g.drawImage(levelImage, 694 - levelImage.getWidth(), 333, null);
 	}
 }
