@@ -35,60 +35,60 @@ public class InventoryMenu implements BaseMenu{
 	private void renderPlayerStats(Graphics g){
 		BufferedImage statsImage;
 		
-		g.drawImage(RessourceManager.getFontifiedText("ATK:", "standard"), 550, 105, null);
+		g.drawImage(RessourceManager.getFontifiedText("ATK:", "standard"), 550, 122, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.atk, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 105, null);
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 122, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 550, 117, null);
+		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 550, 134, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.def, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 117, null);
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 134, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("STR:", "standard"), 550, 129, null);
+		g.drawImage(RessourceManager.getFontifiedText("STR:", "standard"), 550, 146, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.str, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 129, null);
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 146, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("MAG:", "standard"), 550, 141, null);
+		g.drawImage(RessourceManager.getFontifiedText("MAG:", "standard"), 550, 158, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.mag, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 141, null);
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 158, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("DEX:", "standard"), 550, 153, null);
+		g.drawImage(RessourceManager.getFontifiedText("DEX:", "standard"), 550, 170, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.dex, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 153, null);
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 170, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("LUK:", "standard"), 550, 165, null);
+		g.drawImage(RessourceManager.getFontifiedText("LUK:", "standard"), 550, 182, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.luk, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 165, null);
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 182, null);
 	}
 	
 	private void renderPlayerBars(Graphics g){
 		BufferedImage hpBar = RessourceManager.getImage("ui.inventory.hpbar");
 		int hpRestWidth = (int)(hpBar.getWidth() * ((double)(GameVariables.playerBattleStats.hp / (double)GameVariables.playerBattleStats.maxHp)));
 		hpBar = hpBar.getSubimage(hpBar.getWidth() - hpRestWidth, 0, hpRestWidth, hpBar.getHeight());
-		g.drawImage(hpBar, 552, 262, null);
+		g.drawImage(hpBar, 552, 222, null);
 		
 		BufferedImage mpBar = RessourceManager.getImage("ui.inventory.mpbar");
 		int mpRestWidth = (int)(mpBar.getWidth() * ((double)(GameVariables.playerBattleStats.mp / (double)GameVariables.playerBattleStats.maxMp)));
 		mpBar = mpBar.getSubimage(mpBar.getWidth() - mpRestWidth, 0, mpRestWidth, mpBar.getHeight());
-		g.drawImage(mpBar, 552, 292, null);
+		g.drawImage(mpBar, 552, 252, null);
 		
 		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
 		
 		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
 		if(expRestWidth > 0){
 			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
-			g.drawImage(expBar, 552, 322, null);
+			g.drawImage(expBar, 552, 282, null);
 		}
 	}
 	
 	private void renderPlayerLeveling(Graphics g){
 		BufferedImage levelImage;
 		
-		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 333, null);
+		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 295, null);
 		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.level, "standard");
-		g.drawImage(levelImage, 610 - levelImage.getWidth(), 333, null);
+		g.drawImage(levelImage, 610 - levelImage.getWidth(), 295, null);
 		
-		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 333, null);
+		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 295, null);
 		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
-		g.drawImage(levelImage, 694 - levelImage.getWidth(), 333, null);
+		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
 	}
 }
