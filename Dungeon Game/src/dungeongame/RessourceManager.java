@@ -123,6 +123,46 @@ public class RessourceManager {
 
 		return textImage;
 	}
+	
+	public static BufferedImage getFontifiedBreakingText(String text, String font, int maxWidth){
+		
+
+		BufferedImage fontMap = getImage("fonts." + font);
+		int fontWidth = fontMap.getWidth() / 10;
+		int fontHeight = fontMap.getHeight() / 9;
+		
+		int charCount = maxWidth / (fontWidth + 1);
+				
+		String[] textSegments = text.split(" ");
+		ArrayList<String> textBlocks = new ArrayList<String>();
+		
+		String nextTextBlock = "";
+		for(int i = 0; i < textSegments.length; i++){
+			if((nextTextBlock + textSegments[i]).length() + 1 > charCount){
+				textBlocks.add(nextTextBlock);
+				
+				nextTextBlock = textSegments[i];
+				while(nextTextBlock.length() > charCount){
+					String addString = nextTextBlock.substring(0, charCount);
+					textBlocks.add(addString);
+					nextTextBlock = nextTextBlock.substring(charCount);
+				}
+			}
+			else if(!nextTextBlock.equals(""))nextTextBlock += " " + textSegments[i];
+			else nextTextBlock = textSegments[i];
+		}
+		if(!nextTextBlock.equals(""))textBlocks.add(nextTextBlock);
+		
+		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), textBlocks.size() * (fontHeight + 2), BufferedImage.TYPE_INT_ARGB);
+		Graphics textImageGraphics = textImage.getGraphics();
+		
+		for(int i = 0; i < textBlocks.size(); i++){
+			textImageGraphics.drawImage(getFontifiedText(textBlocks.get(i), font), 0, i * (fontHeight + 2), null);
+		}
+		
+		textImageGraphics.dispose();
+		return textImage;
+	}
 
 	public static BufferedImage getFontifiedScaledText(String text, String font, int scaleFactor){
 		int charCount = text.length();

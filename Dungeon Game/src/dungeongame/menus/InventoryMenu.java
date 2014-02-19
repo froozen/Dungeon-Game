@@ -23,6 +23,7 @@ public class InventoryMenu implements BaseMenu{
 		renderPlayerStats(g);
 		renderPlayerBars(g);
 		renderPlayerLeveling(g);
+		renderSelectedItemInformation(g);
 	}
 
 	public void computeNextFrame() {
@@ -90,5 +91,10 @@ public class InventoryMenu implements BaseMenu{
 		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 295, null);
 		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
 		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
+	}
+	
+	private void renderSelectedItemInformation(Graphics g){
+		BufferedImage text = RessourceManager.getFontifiedBreakingText("This is an example text. I actually just want to try out my rendering algorithm for fonts. I guess this is long enough. asdasdadsasdassdadadasdasdasdasdasdadasdasdasdasdasd", "standard", 140);
+		g.drawImage(text, 550, 348, null);
 	}
 }
