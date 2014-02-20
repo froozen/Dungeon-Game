@@ -43,6 +43,7 @@ public class RessourceManager {
 				else System.out.println("Error: Cannot find file: " + imageFile.getAbsolutePath());
 
 			} catch (IOException e) {e.printStackTrace();}
+			if(image != null)images.put(imageName, image);
 
 			return image;
 		}
