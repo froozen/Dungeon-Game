@@ -1,11 +1,17 @@
 package dungeongame.basetypes.items;
 
 import dungeongame.GameVariables;
+import dungeongame.RessourceManager;
 
 public class HealItem extends BaseItem{
 	public int hpAmount, mpAmount;
 
-	
+	public HealItem(int hpAmount, int mpAmount){
+		this.hpAmount = hpAmount;
+		this.mpAmount = mpAmount;
+		
+		this.icon = RessourceManager.getImage("icons.potion");
+	}
 	
 	public void uponUse() {
 		GameVariables.playerBattleStats.hp += hpAmount;

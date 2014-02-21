@@ -6,11 +6,15 @@ import java.awt.image.BufferedImage;
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
 import dungeongame.GameVariables;
+import dungeongame.Inventory;
 import dungeongame.RessourceManager;
 import dungeongame.GameStateManager.GameStateFocus;
+import dungeongame.basetypes.items.BaseItem;
 import dungeongame.states.HUDState;
 
 public class InventoryMenu implements BaseMenu{
+	private final int xRow = 11, yRow = 10;
+	
 	private BufferedImage backgroundImage;
 
 	public InventoryMenu(){
@@ -24,6 +28,7 @@ public class InventoryMenu implements BaseMenu{
 		renderPlayerBars(g);
 		renderPlayerLeveling(g);
 		renderSelectedItemInformation(g);
+		renderItemFields(g);
 	}
 
 	public void computeNextFrame() {
@@ -96,5 +101,20 @@ public class InventoryMenu implements BaseMenu{
 	private void renderSelectedItemInformation(Graphics g){
 		BufferedImage text = RessourceManager.getFontifiedBreakingText("This is an example text. I actually just want to try out my rendering algorithm for fonts. I guess this is long enough. asdasdadsasdassdadadasdasdasdasdasdadasdasdasdasdasd", "standard", 140);
 		g.drawImage(text, 550, 348, null);
+	}
+	
+	private void renderItemFields(Graphics g){
+		int x = 0, y = 0;
+		for(BaseItem i:Inventory.getInventoryArrayList()){
+			g.drawImage(i.icon, 120 + x * 38, 114 + y * 38, null);
+			
+			x++;
+			if(x == xRow){
+				y++;
+				x = 0;
+			}
+			
+			if(y == yRow)break;
+		}
 	}
 }

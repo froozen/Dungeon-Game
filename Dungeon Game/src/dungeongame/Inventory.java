@@ -3,12 +3,19 @@ package dungeongame;
 import java.util.ArrayList;
 
 import dungeongame.basetypes.items.BaseItem;
+import dungeongame.basetypes.items.HealItem;
 
 public class Inventory {
 	private static ArrayList<BaseItem> items;
 
 	static{
 		items = new ArrayList<BaseItem>();
+		
+		//TODO remove later on
+		for(int i = 0; i < 15; i++){
+			BaseItem addItem = new  HealItem(15, 3);
+			items.add(addItem);
+		}
 	}
 
 	public static void addItem(BaseItem item){
