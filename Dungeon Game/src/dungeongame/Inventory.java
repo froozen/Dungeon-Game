@@ -26,6 +26,10 @@ public class Inventory {
 		return items;
 	}
 	
+	public static void removeItem(BaseItem item){
+		items.remove(item);
+	}
+	
 	public static BaseItem getItem(int index){
 		if(index < items.size())return items.get(index);
 		else return null;

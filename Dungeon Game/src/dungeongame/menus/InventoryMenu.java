@@ -58,8 +58,16 @@ public class InventoryMenu implements BaseMenu{
 				selectedItemPoint.x --;
 				if(selectedItemPoint.x < 0)selectedItemPoint.x = xRow - 1;
 			}
-			
+
 			selectedItem = Inventory.getItem(selectedItemPoint.y * xRow + selectedItemPoint.x);
+		}
+		else if(GameInput.wasKeyPressed("Space")){
+			if(selectedItem != null){
+				selectedItem.use();
+				if(selectedItem.consumable){
+					selectedItem = Inventory.getItem(selectedItemPoint.y * xRow + selectedItemPoint.x);
+				}
+			}
 		}
 	}
 

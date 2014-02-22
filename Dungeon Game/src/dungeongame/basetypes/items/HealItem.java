@@ -12,9 +12,10 @@ public class HealItem extends BaseItem{
 		
 		this.icon = RessourceManager.getImage("icons.potion");
 		this.name = "Potion";
+		this.consumable = true;
 	}
 	
-	public void uponUse() {
+	protected void uponUse() {
 		GameVariables.playerBattleStats.hp += hpAmount;
 		if(GameVariables.playerBattleStats.hp > GameVariables.playerBattleStats.maxHp)GameVariables.playerBattleStats.hp = GameVariables.playerBattleStats.maxHp;
 		
