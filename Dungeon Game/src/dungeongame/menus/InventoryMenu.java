@@ -108,6 +108,14 @@ public class InventoryMenu implements BaseMenu{
 		mpBar = mpBar.getSubimage(mpBar.getWidth() - mpRestWidth, 0, mpRestWidth, mpBar.getHeight());
 		g.drawImage(mpBar, 552, 252, null);
 
+		BufferedImage hpText = RessourceManager.getFontifiedText(GameVariables.playerBattleStats.hp + " / " + GameVariables.playerBattleStats.maxHp, "outline");
+		int hpTextX = 622 - (hpText.getWidth() / 2);
+		g.drawImage(hpText, hpTextX, 228, null);
+		
+		BufferedImage mpText = RessourceManager.getFontifiedText(GameVariables.playerBattleStats.mp + " / " + GameVariables.playerBattleStats.maxMp, "outline");
+		int mpTextX = 622 - (mpText.getWidth() / 2);
+		g.drawImage(mpText, mpTextX, 258, null);
+		
 		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
 
 		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
