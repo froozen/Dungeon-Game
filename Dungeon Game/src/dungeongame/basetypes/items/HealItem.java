@@ -11,6 +11,7 @@ public class HealItem extends BaseItem{
 		this.mpAmount = mpAmount;
 		
 		this.icon = RessourceManager.getImage("icons.potion");
+		this.name = "Potion";
 	}
 	
 	public void uponUse() {
