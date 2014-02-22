@@ -1,6 +1,7 @@
 package dungeongame.menus;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import dungeongame.GameInput;
@@ -16,9 +17,13 @@ public class InventoryMenu implements BaseMenu{
 	private final int xRow = 11, yRow = 10;
 	
 	private BufferedImage backgroundImage;
+	private Point selectedItemPoint;
+	private BaseItem selectedItem;
 
 	public InventoryMenu(){
 		backgroundImage = RessourceManager.getImage("ui.inventory.background");
+		selectedItem = Inventory.getInventoryArrayList().get(1);
+		selectedItemPoint = new Point(0, 0);
 	}
 	
 	public void drawMe(Graphics g) {
@@ -98,9 +103,7 @@ public class InventoryMenu implements BaseMenu{
 		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
 	}
 	
-	private void renderSelectedItemInformation(Graphics g){
-		BaseItem selectedItem = Inventory.getInventoryArrayList().get(1);
-		
+	private void renderSelectedItemInformation(Graphics g){		
 		if(selectedItem != null){
 			BufferedImage name = RessourceManager.getFontifiedText(selectedItem.name, "standard");
 			g.drawImage(name, 588, 313, null);
@@ -125,5 +128,7 @@ public class InventoryMenu implements BaseMenu{
 			
 			if(y == yRow)break;
 		}
+		
+		g.drawImage(RessourceManager.getImage("ui.inventory.selector"), 116 + selectedItemPoint.x * 38, 110 + selectedItemPoint.y * 38, null);
 	}
 }
