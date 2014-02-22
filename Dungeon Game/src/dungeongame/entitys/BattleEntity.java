@@ -30,6 +30,7 @@ public abstract class BattleEntity extends BaseEntity{
 				BattleEntity battleTarget = (BattleEntity)target;
 				battleTarget.receiveDamage(battleStats.atk);
 				moving = true;
+				remainingFreezeTime = 0.5;
 			}
 		}
 	}
@@ -38,6 +39,6 @@ public abstract class BattleEntity extends BaseEntity{
 		battleStats.dealDamage(damage);
 		
 		int actualDamage = damage - battleStats.def;
-		if(actualDamage > 0)locationMap.particles.add(new DamageNumberParticle(actualDamage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) + (sprite.getHeight() / 3)));
+		if(actualDamage > 0)locationMap.particles.add(new DamageNumberParticle(actualDamage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) - (sprite.getHeight() / 4)));
 	}
 }

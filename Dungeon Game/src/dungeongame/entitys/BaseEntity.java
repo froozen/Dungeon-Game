@@ -21,12 +21,9 @@ public abstract class BaseEntity {
 	public boolean moving;
 
 	protected int lastCyclePhase;
-
-	
+	protected double remainingFreezeTime;
 
 	public abstract void initializeMovement();
-
-	
 
 	public BaseEntity(Point position, GameMap locationMap){
 		this.locationMap = locationMap;
@@ -113,7 +110,11 @@ public abstract class BaseEntity {
 
 	public void computeNextPosition(){
 		if (moving){
-			if(direction == Direction.UP){
+			if(remainingFreezeTime > 0){
+				remainingFreezeTime -= GameVariables.timeSinceLastFrame;
+				if(remainingFreezeTime < 0)moving = false;
+			}
+			else if(direction == Direction.UP){
 				if(y>position.y){
 					y -= GameVariables.timeSinceLastFrame * speed;
 				}

@@ -15,7 +15,7 @@ public class Player extends BattleEntity{
 
 		if(GameVariables.playerBattleStats == null){
 			battleStats = new BattleStats();
-			battleStats.atk = 5;
+			battleStats.atk = 15;
 			battleStats.def = 5;
 			
 			battleStats.maxHp = 200;
