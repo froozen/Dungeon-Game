@@ -1,6 +1,7 @@
 package dungeongame.basetypes.items;
 
 import dungeongame.GameVariables;
+import dungeongame.Inventory;
 import dungeongame.RessourceManager;
 
 public class HealItem extends BaseItem{
@@ -12,15 +13,23 @@ public class HealItem extends BaseItem{
 		
 		this.icon = RessourceManager.getImage("icons.potion");
 		this.name = "Potion";
-		this.consumable = true;
 	}
 	
-	protected void uponUse() {
-		GameVariables.playerBattleStats.hp += hpAmount;
-		if(GameVariables.playerBattleStats.hp > GameVariables.playerBattleStats.maxHp)GameVariables.playerBattleStats.hp = GameVariables.playerBattleStats.maxHp;
+	public void use() {
+		boolean used = false;
+		if(GameVariables.playerBattleStats.hp < GameVariables.playerBattleStats.maxHp && hpAmount != 0){
+			GameVariables.playerBattleStats.hp += hpAmount;
+			if(GameVariables.playerBattleStats.hp > GameVariables.playerBattleStats.maxHp)GameVariables.playerBattleStats.hp = GameVariables.playerBattleStats.maxHp;
+			used = true;
+		}
 		
-		GameVariables.playerBattleStats.mp += mpAmount;
-		if(GameVariables.playerBattleStats.mp > GameVariables.playerBattleStats.maxMp)GameVariables.playerBattleStats.mp = GameVariables.playerBattleStats.maxMp;
+		if(GameVariables.playerBattleStats.mp < GameVariables.playerBattleStats.maxMp && mpAmount != 0){
+			GameVariables.playerBattleStats.mp += mpAmount;
+			if(GameVariables.playerBattleStats.mp > GameVariables.playerBattleStats.maxMp)GameVariables.playerBattleStats.mp = GameVariables.playerBattleStats.maxMp;
+			used = true;
+		}
+		
+		if(used)Inventory.removeItem(this);
 	}
 
 	public String getDescription() {
