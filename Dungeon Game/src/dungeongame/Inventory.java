@@ -12,7 +12,7 @@ public class Inventory {
 		items = new ArrayList<BaseItem>();
 		
 		//TODO remove later on
-		for(int i = 0; i < 15; i++){
+		for(int i = 0; i < 30; i++){
 			BaseItem addItem = new  HealItem(15, 3);
 			items.add(addItem);
 		}
@@ -27,6 +27,7 @@ public class Inventory {
 	}
 	
 	public static BaseItem getItem(int index){
-		return items.get(index);
+		if(index < items.size())return items.get(index);
+		else return null;
 	}
 }
