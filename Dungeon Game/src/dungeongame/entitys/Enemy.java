@@ -36,11 +36,11 @@ public class Enemy extends BattleEntity{
 				}
 			}
 			else if(prey.position.y == position.y){
-				if(prey.position.x - position.x == 1){
+				if(prey.position.x - position.x == -1){
 					direction = Direction.LEFT;
 					attack(direction);
 				}
-				else if(prey.position.x - position.x == -1){
+				else if(prey.position.x - position.x == 1){
 					direction = Direction.RIGHT;
 					attack(direction);
 				}
