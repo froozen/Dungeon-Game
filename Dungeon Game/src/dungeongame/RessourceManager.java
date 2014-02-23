@@ -166,27 +166,7 @@ public class RessourceManager {
 	}
 
 	public static BufferedImage getFontifiedScaledText(String text, String font, int scaleFactor){
-		int charCount = text.length();
-
-		BufferedImage fontMap = getImage("fonts." + font);
-		int fontWidth = fontMap.getWidth() / 10;
-		int fontHeight = fontMap.getHeight() / 9;
-		BufferedImage textImage = new BufferedImage(charCount * (fontWidth + 1), fontHeight, BufferedImage.TYPE_INT_ARGB);
-
-		Graphics textImageGraphics = textImage.getGraphics();
-
-		BufferedImage fontImage;
-		Point fontPosition = new Point();
-		if(fontMap != null){
-			for(int i = 0; i < charCount; i++){
-				if(fontPositions.containsKey(text.charAt(i)))fontPosition = fontPositions.get(text.charAt(i));
-				else fontPosition = fontPositions.get('?');
-
-				fontImage = fontMap.getSubimage(fontPosition.x * fontWidth, fontPosition.y * fontHeight, fontWidth, fontHeight);
-				textImageGraphics.drawImage(fontImage, i * (fontWidth + 1), 0, null);
-			}
-		}
-		textImageGraphics.dispose();
+		BufferedImage textImage = getFontifiedText(text, font);
 
 		Image scaledTextImage = textImage.getScaledInstance(textImage.getWidth() * scaleFactor, textImage.getHeight() * scaleFactor, Image.SCALE_DEFAULT);
 		BufferedImage finalTextImage = new BufferedImage(scaledTextImage.getWidth(null), scaledTextImage.getWidth(null), BufferedImage.TYPE_INT_ARGB);

@@ -9,10 +9,7 @@ import dungeongame.menus.BaseMenu;
 
 public class HUDState implements BaseState, BaseMenu{
 
-	public void drawMe(Graphics g) {
-		BufferedImage text = RessourceManager.getFontifiedText("Demo text", "outline");
-		g.drawImage(text, 800 - text.getWidth() - 5, 2, null);
-		
+	public void drawMe(Graphics g) {		
 		g.drawImage(RessourceManager.getImage("hud.background"), 0, 0, null);
 		
 		renderPlayerHPBar(g);
