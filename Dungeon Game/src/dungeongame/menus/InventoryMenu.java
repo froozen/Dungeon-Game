@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import dungeongame.BattleStats;
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
 import dungeongame.GameVariables;
@@ -34,6 +35,7 @@ public class InventoryMenu implements BaseMenu{
 		renderPlayerLeveling(g);
 		renderSelectedItemInformation(g);
 		renderItemFields(g);
+		renderEquipmentIcons(g);
 	}
 
 	public void computeNextFrame() {
@@ -166,5 +168,15 @@ public class InventoryMenu implements BaseMenu{
 		}
 
 		g.drawImage(RessourceManager.getImage("ui.inventory.selector"), 116 + selectedItemPoint.x * 38, 110 + selectedItemPoint.y * 38, null);
+	}
+	
+	private void renderEquipmentIcons(Graphics g){
+		BattleStats battleStats = GameVariables.playerBattleStats;
+		
+		if(battleStats.getWeapon() != null)g.drawImage(battleStats.getWeapon().icon, 623, 147, null);
+		if(battleStats.getHelmet() != null)g.drawImage(battleStats.getHelmet().icon, 661, 109, null);
+		if(battleStats.getArmorn() != null)g.drawImage(battleStats.getArmorn().icon, 661, 147, null);
+		if(battleStats.getPants() != null)g.drawImage(battleStats.getPants().icon, 661, 185, null);
+
 	}
 }

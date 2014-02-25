@@ -91,4 +91,20 @@ public class BattleStats {
 		
 		Inventory.removeItem(item);
 	}
+	
+	public EquipmentItem getWeapon(){
+		return weapon;
+	}
+	
+	public EquipmentItem getArmorn(){
+		return armor;
+	}
+	
+	public EquipmentItem getHelmet(){
+		return helmet;
+	}
+	
+	public EquipmentItem getPants(){
+		return pants;
+	}
 }

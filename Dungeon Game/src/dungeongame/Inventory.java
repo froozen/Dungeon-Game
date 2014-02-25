@@ -13,15 +13,16 @@ public class Inventory {
 	static{
 		items = new ArrayList<BaseItem>();
 		
+		items.add(new EquipmentItem(EquipmentType.WEAPON, 15));
+		items.add(new EquipmentItem(EquipmentType.HELMET, 15));
+		items.add(new EquipmentItem(EquipmentType.ARMOR, 15));
+		items.add(new EquipmentItem(EquipmentType.PANTS, 15));
+		
 		//TODO remove later on
 		for(int i = 0; i < 30; i++){
 			BaseItem addItem = new  HealItem(15, 3);
 			items.add(addItem);
 		}
-		items.add(new EquipmentItem(EquipmentType.WEAPON, 15));
-		items.add(new EquipmentItem(EquipmentType.HELMET, 15));
-		items.add(new EquipmentItem(EquipmentType.ARMOR, 15));
-		items.add(new EquipmentItem(EquipmentType.PANTS, 15));
 	}
 
 	public static void addItem(BaseItem item){
