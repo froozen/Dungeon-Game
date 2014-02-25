@@ -1,11 +1,16 @@
 package dungeongame;
 
+import dungeongame.basetypes.items.EquipmentItem;
+import dungeongame.basetypes.items.EquipmentItem.EquipmentType;
+
 public class BattleStats {
 	public int hp, maxHp;
 	public int mp, maxMp;
 	public int atk, def;
 	public int str, dex, mag, luk;
 	public int level, expToNextLevel, lastExpToNextLevel;
+	
+	private EquipmentItem weapon, helmet, armor, pants;
 
 	public BattleStats(){
 		hp = 1;
@@ -48,5 +53,42 @@ public class BattleStats {
 	private void levelUp(){
 		level++;
 		System.out.println("Level Up! Level raised to " + level);
+	}
+	
+	public void equipEquipmentItem(EquipmentItem item){
+		if(item.equipmentType == EquipmentType.WEAPON){
+			if(weapon != null){
+				Inventory.addItem(weapon);
+				atk -= weapon.amount;
+			}
+			weapon = item;
+			atk += weapon.amount;
+		}
+		else if(item.equipmentType == EquipmentType.HELMET){
+			if(helmet != null){
+				Inventory.addItem(helmet);
+				def -= helmet.amount;
+			}
+			helmet = item;
+			def += helmet.amount;
+		}
+		else if(item.equipmentType == EquipmentType.ARMOR){
+			if(armor != null){
+				Inventory.addItem(armor);
+				def -= armor.amount;
+			}
+			armor = item;
+			def += armor.amount;
+		}
+		else if(item.equipmentType == EquipmentType.PANTS){
+			if(pants != null){
+				Inventory.addItem(pants);
+				def -= pants.amount;
+			}
+			pants = item;
+			def += pants.amount;
+		}
+		
+		Inventory.removeItem(item);
 	}
 }

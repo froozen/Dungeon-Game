@@ -3,6 +3,8 @@ package dungeongame;
 import java.util.ArrayList;
 
 import dungeongame.basetypes.items.BaseItem;
+import dungeongame.basetypes.items.EquipmentItem;
+import dungeongame.basetypes.items.EquipmentItem.EquipmentType;
 import dungeongame.basetypes.items.HealItem;
 
 public class Inventory {
@@ -16,6 +18,10 @@ public class Inventory {
 			BaseItem addItem = new  HealItem(15, 3);
 			items.add(addItem);
 		}
+		items.add(new EquipmentItem(EquipmentType.WEAPON, 15));
+		items.add(new EquipmentItem(EquipmentType.HELMET, 15));
+		items.add(new EquipmentItem(EquipmentType.ARMOR, 15));
+		items.add(new EquipmentItem(EquipmentType.PANTS, 15));
 	}
 
 	public static void addItem(BaseItem item){

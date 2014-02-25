@@ -139,13 +139,15 @@ public class InventoryMenu implements BaseMenu{
 
 	private void renderSelectedItemInformation(Graphics g){		
 		if(selectedItem != null){
-			BufferedImage name = RessourceManager.getFontifiedText(selectedItem.name, "standard");
-			g.drawImage(name, 588, 313, null);
-
-			g.drawImage(selectedItem.icon, 553, 313, null);
-
-			BufferedImage text = RessourceManager.getFontifiedBreakingText(selectedItem.getDescription(), "standard", 140);
-			g.drawImage(text, 550, 350, null);
+			if(!(selectedItem.getDescription() == null || selectedItem.getDescription().equals(""))){
+				BufferedImage text = RessourceManager.getFontifiedBreakingText(selectedItem.getDescription(), "standard", 140);
+				g.drawImage(text, 550, 350, null);
+			}
+			if(!(selectedItem.name == null || selectedItem.name.equals(""))){
+				BufferedImage name = RessourceManager.getFontifiedText(selectedItem.name, "standard");
+				g.drawImage(name, 588, 313, null);
+			}
+			if(selectedItem.icon != null)g.drawImage(selectedItem.icon, 553, 313, null);
 		}
 	}
 
