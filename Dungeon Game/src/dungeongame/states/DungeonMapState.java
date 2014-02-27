@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
+import dungeongame.GameVariables;
 import dungeongame.GameStateManager.GameStateFocus;
 import dungeongame.basetypes.DungeonMap;
 import dungeongame.entitys.BaseEntity;
@@ -35,6 +36,11 @@ public class DungeonMapState implements BaseState{
 		activeMap.updateParticles();
 		
 		checkForMenus();
+		if(GameVariables.playerBattleStats.hp < 1){
+			GameStateManager.changeBackgroundState(new TitleScreenState());
+			GameStateManager.changeForegroundState(null);
+			GameVariables.playerBattleStats = null;
+		}
 	}
 	
 	public void drawMe(Graphics g) {

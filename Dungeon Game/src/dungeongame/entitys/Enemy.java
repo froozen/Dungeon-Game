@@ -13,7 +13,7 @@ public class Enemy extends BattleEntity{
 		spriteLocation = "sprites.enemy";
 		
 		battleStats = new BattleStats();
-		battleStats.atk = 7;
+		battleStats.atk = 10;
 		battleStats.def = 3;
 		battleStats.maxHp = 30;
 		battleStats.hp = 30;
