@@ -5,7 +5,7 @@ Dungeon Game is a Dungeon Crawler Prototype written in Java.
     Extract latest.zip
     Run Dungeon-Game.jar
 
-####Featurs
+####Features
 * Randomly Generated Maps
 * Inventory
 * Basic Battle System
