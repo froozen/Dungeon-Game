@@ -29,13 +29,14 @@ public class DungeonMapState implements BaseState{
 
 	public void computeNextFrame() {
 		initializeMovements();
-		updatePositions();
+		updateScreenPositions();
 		sortEntitys();
 		removeEntities();
 		
 		activeMap.updateParticles();
 		
 		checkForMenus();
+		
 		if(GameVariables.playerBattleStats.hp < 1){
 			GameStateManager.changeBackgroundState(new TitleScreenState());
 			GameStateManager.changeForegroundState(null);
@@ -70,7 +71,7 @@ public class DungeonMapState implements BaseState{
 		}
 	}
 
-	private void updatePositions(){
+	private void updateScreenPositions(){
 		ArrayList<BaseEntity> valuableEntitys = activeMap.getEntitysIn(activeMap.getRoomThatContains(player));
 		if(valuableEntitys != null){
 			for(BaseEntity entity:valuableEntitys){
