@@ -1,8 +1,11 @@
 package dungeongame.basetypes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +18,10 @@ import dungeongame.particles.BaseParticle;
 public class DungeonMap extends GameMap{
 	public ArrayList<DungeonRoom> rooms;
 	public ArrayList<Point> links;
+	
+	private BufferedImage background, tintedBackground;
+	
+	private final static int darknessFactor = 75;
 
 	public DungeonMap(int width, int height) {
 		super(width, height);
@@ -29,39 +36,89 @@ public class DungeonMap extends GameMap{
 		createLinks();
 		updateTiles();
 		fillRooms();
+		
+		background = new BufferedImage ( width * RessourceManager.tileSize, height * RessourceManager.tileSize, BufferedImage.TYPE_INT_RGB);
+		Graphics g = background.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect( 0, 0, background.getWidth(), background.getHeight() );
+		g.dispose();
 	}
-	
+
 	public void drawMe(Graphics g){
+		// TODO Draw on a BufferedImage
 		DungeonRoom targetRoom = getRoomThatContains(getPlayer());
-		if(targetRoom != null){
-			ArrayList<BaseEntity> targetEntitys = getEntitysIn(targetRoom);
-			Rectangle targetRectangle = new Rectangle(targetRoom.space.x - 1, targetRoom.space.y -1, targetRoom.space.width + 2, targetRoom.space.height +2);
+
+		if ( targetRoom != null )
+		{
+			if ( !targetRoom.visited )
+			{
+				targetRoom.visited = true;
+
+				Rectangle targetRectangle = new Rectangle(targetRoom.space.x - 1, targetRoom.space.y -1, targetRoom.space.width + 2, targetRoom.space.height +2);
+				Graphics backgroundGraphics = background.getGraphics();
 			
-			for(int x = targetRectangle.x; x < targetRectangle.x + targetRectangle.width; x++){
-				for(int y = targetRectangle.y ; y < targetRectangle.y + targetRectangle.height; y++){
-					g.drawImage(RessourceManager.getTile(tiles[x][y]), x * RessourceManager.tileSize, y * RessourceManager.tileSize, null);
+				backgroundGraphics.setColor(Color.white);
+				backgroundGraphics.fillRect(
+						targetRectangle.x * RessourceManager.tileSize,
+						targetRectangle.y * RessourceManager.tileSize,
+						targetRectangle.width * RessourceManager.tileSize,
+						targetRectangle.height * RessourceManager.tileSize);
+			
+				// backgroundGraphics.setXORMode(new Color ( 12, 12, 12 ));
+				for(int x = targetRectangle.x; x < targetRectangle.x + targetRectangle.width; x++){
+					for(int y = targetRectangle.y ; y < targetRectangle.y + targetRectangle.height; y++){
+						backgroundGraphics.drawImage(RessourceManager.getTile(tiles[x][y]), x * RessourceManager.tileSize, y * RessourceManager.tileSize, null);
+					}
 				}
-			}
-			
-			for(BaseEntity e:targetEntitys){
-				e.drawMe(g);
+				backgroundGraphics.setPaintMode ();
+				backgroundGraphics.dispose();
+
+				//Recolor
+				tintedBackground = new BufferedImage ( background.getColorModel(), background.copyData(null), background.getColorModel().isAlphaPremultiplied(), null );
+				WritableRaster raster = tintedBackground.getRaster();
+				for ( int x = 0; x < tintedBackground.getWidth(); x++ )
+					for ( int y = 0; y < tintedBackground.getHeight(); y++ )
+					{
+						int[] pixel = raster.getPixel(x, y, ( int[] ) null );
+						pixel [0] = pixel[0] - darknessFactor >= 0 ? pixel[0] - darknessFactor : 0;
+						pixel [1] = pixel[1] - darknessFactor >= 0 ? pixel[1] - darknessFactor : 0;
+						pixel [2] = pixel[2] - darknessFactor >= 0 ? pixel[2] - darknessFactor : 0;
+						raster.setPixel(x, y, pixel);
+					}
 			}
 		}
-		else{
+		
+		g.drawImage(tintedBackground, 0, 0, null );
+
+		if ( targetRoom == null ){
 			Point playerPosition = getPlayer().position;
-			
+
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y]), playerPosition.x * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x - 1][playerPosition.y]), (playerPosition.x - 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x + 1][playerPosition.y]), (playerPosition.x + 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y - 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y - 1) * RessourceManager.tileSize, null);
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y + 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y + 1) * RessourceManager.tileSize, null);
-			
+
 			getPlayer().drawMe(g);
 		}
-		
+		else
+		{
+			ArrayList<BaseEntity> targetEntitys = getEntitysIn(targetRoom);
+			Rectangle targetRectangle = new Rectangle(targetRoom.space.x - 1, targetRoom.space.y -1, targetRoom.space.width + 2, targetRoom.space.height +2);
+
+			for(int x = targetRectangle.x; x < targetRectangle.x + targetRectangle.width; x++){
+				for(int y = targetRectangle.y ; y < targetRectangle.y + targetRectangle.height; y++){
+					g.drawImage(RessourceManager.getTile(tiles[x][y]), x * RessourceManager.tileSize, y * RessourceManager.tileSize, null);
+				}
+			}
+
+			for(BaseEntity e:targetEntitys)
+				e.drawMe(g);
+		}
+
 		for(BaseParticle particle:particles)particle.drawMe(g);
 	}
-	
+
 	public boolean roomsContain(Point point){
 		for(DungeonRoom room:rooms){
 			if(room.space.contains(point))return true;
@@ -77,23 +134,23 @@ public class DungeonMap extends GameMap{
 
 		return false;
 	}
-	
+
 	public DungeonRoom getRoomThatContains(BaseEntity  e){
 		for(DungeonRoom room:rooms){
 			if(room.space.contains(e.position))return room;
 		}
 		return null;
 	}
-	
+
 	public ArrayList<BaseEntity> getEntitysIn(DungeonRoom room){
 		if(room == null)return null;
-		
+
 		ArrayList<BaseEntity> returnList = new ArrayList<BaseEntity>();
-		
+
 		for(BaseEntity e:entitys){
 			if(room.space.contains(e.position))returnList.add(e);
 		}
-		
+
 		if(returnList.size() > 0)return returnList;
 		else return null;
 	}
@@ -269,23 +326,23 @@ public class DungeonMap extends GameMap{
 		}
 		return intersectingRooms;
 	}
-	
+
 	private void fillRooms(){
 		Random random = new Random();
-		
+
 		DungeonRoom playerSpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		Point playerSpawnPoint = new Point(playerSpawnRoom.space.x + random.nextInt(playerSpawnRoom.space.width), playerSpawnRoom.space.y + random.nextInt(playerSpawnRoom.space.height));
 		Player player = new Player(playerSpawnPoint, this);
 		entitys.add(player);
-		
+
 		DungeonRoom enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		while(enemySpawnRoom == playerSpawnRoom)enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		Point enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
-		
+
 		while(occupied[enemySpawnPoint.x][enemySpawnPoint.y]){
 			enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
 		}
-		
+
 		Enemy enemy = new Enemy(enemySpawnPoint, this);
 		entitys.add(enemy);
 	}
