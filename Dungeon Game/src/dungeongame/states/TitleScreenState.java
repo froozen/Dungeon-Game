@@ -25,7 +25,7 @@ public class TitleScreenState implements BaseState{
 		if(GameInput.wasLeftClicked())System.out.println("Left Click!");
 		if(GameInput.wasRightClicked())System.out.println("Right Click!");
 
-		if(GameInput.wasKeyPressed("X")){
+		if(GameInput.wasKeyPressed("Menu")){
 			System.out.println("Switching to DungeonMapState");
 			GameStateManager.changeBackgroundState(new DungeonMapState());
 		}

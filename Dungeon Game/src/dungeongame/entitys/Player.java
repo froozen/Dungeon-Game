@@ -41,11 +41,11 @@ public class Player extends BattleEntity{
 
 	public void initializeMovement() {
 		if(!moving){
-			if(GameInput.wasKeyDown("W"))moveDirection(Direction.UP);
-			else if(GameInput.wasKeyDown("A")) moveDirection(Direction.LEFT);
-			else if(GameInput.wasKeyDown("D")) moveDirection(Direction.RIGHT);
-			else if(GameInput.wasKeyDown("S")) moveDirection(Direction.DOWN);
-			else if(GameInput.wasKeyDown("Space"))attack(direction);
+			if(GameInput.wasKeyDown("Up"))moveDirection(Direction.UP);
+			else if(GameInput.wasKeyDown("Left")) moveDirection(Direction.LEFT);
+			else if(GameInput.wasKeyDown("Right")) moveDirection(Direction.RIGHT);
+			else if(GameInput.wasKeyDown("Down")) moveDirection(Direction.DOWN);
+			else if(GameInput.wasKeyDown("Action"))attack(direction);
 		}
 	}
 

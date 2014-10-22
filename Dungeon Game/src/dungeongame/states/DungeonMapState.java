@@ -100,7 +100,7 @@ public class DungeonMapState implements BaseState{
 	}
 	
 	private void checkForMenus(){
-		if(GameInput.wasKeyPressed("X")){
+		if(GameInput.wasKeyPressed("Menu")){
 			MenuStackState menuStackState = new MenuStackState();
 			menuStackState.addMenu(new InventoryMenu());
 			

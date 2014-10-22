@@ -10,10 +10,19 @@ public class GameInput implements MouseListener , KeyListener{
 	private static boolean wasLeftClicked, wasRightClicked;
 	private static boolean isLeftClicked, isRightClicked;
 	private static HashMap<String, Boolean> keyIsDown, keyWasDown, keyIsPressed, keyWasPressed;
+	private static HashMap<Integer, String> keyBinds;
 
 	static{
 		keyIsPressed = new HashMap<String, Boolean>();
 		keyIsDown = new HashMap<String, Boolean>();
+		
+		keyBinds = new HashMap <Integer, String> ();
+		keyBinds.put(KeyEvent.VK_W, "Up");
+		keyBinds.put(KeyEvent.VK_S, "Down");
+		keyBinds.put(KeyEvent.VK_A, "Left");
+		keyBinds.put(KeyEvent.VK_D, "Right");
+		keyBinds.put(KeyEvent.VK_X, "Menu");
+		keyBinds.put(KeyEvent.VK_SPACE, "Action");
 	}
 	
 	public static boolean wasKeyDown(String keyName){
@@ -52,16 +61,21 @@ public class GameInput implements MouseListener , KeyListener{
 	}
 	
 	public void keyPressed(KeyEvent e) {	
-		keyIsDown.put(determineKeyName(e), true);
+		String name = determineKeyName(e);
+		if ( name != null )
+			keyIsDown.put(name, true);
 	}
 
 	public void keyReleased(KeyEvent e) {
-		keyIsPressed.put(determineKeyName(e), true);
+		String name = determineKeyName(e);
+		if ( name != null )
+			keyIsPressed.put(name, true);
 	}
 	
 	private static String determineKeyName(KeyEvent e){
-		if(!KeyEvent.getKeyText(e.getKeyCode()).equals("Unknown keyCode: 0x0"))return KeyEvent.getKeyText(e.getKeyCode());
-		else return ("" + e.getKeyChar()).toUpperCase();
+		if ( keyBinds.containsKey ( e.getKeyCode() ) )
+			return keyBinds.get(e.getKeyCode());
+		return null;
 	}
 	
 	//UNUSED

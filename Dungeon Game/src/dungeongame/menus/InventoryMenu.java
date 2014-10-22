@@ -39,31 +39,31 @@ public class InventoryMenu implements BaseMenu{
 	}
 
 	public void computeNextFrame() {
-		if(GameInput.wasKeyPressed("X")){
+		if(GameInput.wasKeyPressed("Menu")){
 			GameStateManager.changeForegroundState(new HUDState());
 			GameStateManager.changeGameStateFocus(GameStateFocus.BACKGROUND);
 		}
-		else if (GameInput.wasKeyPressed("W") || GameInput.wasKeyPressed("S") || GameInput.wasKeyPressed("A") || GameInput.wasKeyPressed("D")){
-			if(GameInput.wasKeyPressed("W")){
+		else if (GameInput.wasKeyPressed("Up") || GameInput.wasKeyPressed("Down") || GameInput.wasKeyPressed("Left") || GameInput.wasKeyPressed("Right")){
+			if(GameInput.wasKeyPressed("Up")){
 				selectedItemPoint.y --;
 				if(selectedItemPoint.y < 0)selectedItemPoint.y = yRow - 1;
 			}
-			else if(GameInput.wasKeyPressed("S")){
+			else if(GameInput.wasKeyPressed("Down")){
 				selectedItemPoint.y ++;
 				if(selectedItemPoint.y == yRow)selectedItemPoint.y = 0;
 			}
-			else if(GameInput.wasKeyPressed("D")){
+			else if(GameInput.wasKeyPressed("Right")){
 				selectedItemPoint.x ++;
 				if(selectedItemPoint.x == xRow)selectedItemPoint.x = 0;
 			}
-			else if(GameInput.wasKeyPressed("A")){
+			else if(GameInput.wasKeyPressed("Left")){
 				selectedItemPoint.x --;
 				if(selectedItemPoint.x < 0)selectedItemPoint.x = xRow - 1;
 			}
 
 			selectedItem = Inventory.getItem(selectedItemPoint.y * xRow + selectedItemPoint.x);
 		}
-		else if(GameInput.wasKeyPressed("Space")){
+		else if(GameInput.wasKeyPressed("Action")){
 			if(selectedItem != null){
 				selectedItem.use();
 				selectedItem = Inventory.getItem(selectedItemPoint.y * xRow + selectedItemPoint.x);
