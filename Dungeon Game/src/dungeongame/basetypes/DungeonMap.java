@@ -94,10 +94,10 @@ public class DungeonMap extends GameMap{
 			Point playerPosition = getPlayer().position;
 
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y]), playerPosition.x * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
-			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x - 1][playerPosition.y]), (playerPosition.x - 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
-			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x + 1][playerPosition.y]), (playerPosition.x + 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
-			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y - 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y - 1) * RessourceManager.tileSize, null);
-			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y + 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y + 1) * RessourceManager.tileSize, null);
+//			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x - 1][playerPosition.y]), (playerPosition.x - 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
+//			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x + 1][playerPosition.y]), (playerPosition.x + 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
+//			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y - 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y - 1) * RessourceManager.tileSize, null);
+//			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y + 1]), playerPosition.x * RessourceManager.tileSize, (playerPosition.y + 1) * RessourceManager.tileSize, null);
 
 			getPlayer().drawMe(g);
 		}
