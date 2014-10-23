@@ -346,4 +346,19 @@ public class DungeonMap extends GameMap{
 		Enemy enemy = new Enemy(enemySpawnPoint, this);
 		entitys.add(enemy);
 	}
+	
+	public void spawnEnemy()
+	{
+		Random random = new Random();
+		
+		DungeonRoom enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
+		Point enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
+
+		while(occupied[enemySpawnPoint.x][enemySpawnPoint.y]){
+			enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
+		}
+
+		Enemy enemy = new Enemy(enemySpawnPoint, this);
+		entitys.add(enemy);
+	}
 }

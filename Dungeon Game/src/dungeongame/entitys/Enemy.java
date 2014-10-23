@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import dungeongame.BattleStats;
 import dungeongame.GameVariables;
+import dungeongame.basetypes.DungeonMap;
 import dungeongame.basetypes.GameMap;
 
 public class Enemy extends BattleEntity{
@@ -58,6 +59,7 @@ public class Enemy extends BattleEntity{
 
 	public void uponDeath() {
 		GameVariables.playerBattleStats.gainExp(20);
+		((DungeonMap) locationMap).spawnEnemy();
 	}
 
 }
