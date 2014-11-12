@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import dungeongame.BattleStats;
 import dungeongame.GameInput;
 import dungeongame.GameStateManager;
 import dungeongame.GameVariables;
@@ -13,6 +12,7 @@ import dungeongame.RessourceManager;
 import dungeongame.GameStateManager.GameStateFocus;
 import dungeongame.basetypes.items.BaseItem;
 import dungeongame.states.HUDState;
+import dungeongame.stats.HumanStats;
 
 public class InventoryMenu implements BaseMenu{
 	private final int xRow = 11, yRow = 10;
@@ -74,29 +74,14 @@ public class InventoryMenu implements BaseMenu{
 	private void renderPlayerStats(Graphics g){
 		BufferedImage statsImage;
 
+		// TODO Update stats display
 		g.drawImage(RessourceManager.getFontifiedText("ATK:", "standard"), 550, 122, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.atk, "standard");
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getAtk(), "standard");
 		g.drawImage(statsImage, 617 - statsImage.getWidth(), 122, null);
 
 		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 550, 134, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.def, "standard");
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getDef(), "standard");
 		g.drawImage(statsImage, 617 - statsImage.getWidth(), 134, null);
-
-		g.drawImage(RessourceManager.getFontifiedText("STR:", "standard"), 550, 146, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.str, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 146, null);
-
-		g.drawImage(RessourceManager.getFontifiedText("MAG:", "standard"), 550, 158, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.mag, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 158, null);
-
-		g.drawImage(RessourceManager.getFontifiedText("DEX:", "standard"), 550, 170, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.dex, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 170, null);
-
-		g.drawImage(RessourceManager.getFontifiedText("LUK:", "standard"), 550, 182, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.luk, "standard");
-		g.drawImage(statsImage, 617 - statsImage.getWidth(), 182, null);
 	}
 
 	private void renderPlayerBars(Graphics g){
@@ -118,25 +103,25 @@ public class InventoryMenu implements BaseMenu{
 		int mpTextX = 622 - (mpText.getWidth() / 2);
 		g.drawImage(mpText, mpTextX, 258, null);
 		
-		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
-
-		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
-		if(expRestWidth > 0){
-			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
-			g.drawImage(expBar, 552, 282, null);
-		}
+//		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
+//
+//		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
+//		if(expRestWidth > 0){
+//			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
+//			g.drawImage(expBar, 552, 282, null);
+//		}
 	}
 
 	private void renderPlayerLeveling(Graphics g){
-		BufferedImage levelImage;
-
-		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 295, null);
-		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.level, "standard");
-		g.drawImage(levelImage, 610 - levelImage.getWidth(), 295, null);
-
-		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 295, null);
-		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
-		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
+//		BufferedImage levelImage;
+//
+//		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 295, null);
+//		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.level, "standard");
+//		g.drawImage(levelImage, 610 - levelImage.getWidth(), 295, null);
+//
+//		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 295, null);
+//		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
+//		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
 	}
 
 	private void renderSelectedItemInformation(Graphics g){		
@@ -171,12 +156,12 @@ public class InventoryMenu implements BaseMenu{
 	}
 	
 	private void renderEquipmentIcons(Graphics g){
-		BattleStats battleStats = GameVariables.playerBattleStats;
+		HumanStats playerStats = GameVariables.playerBattleStats;
 		
-		if(battleStats.getWeapon() != null)g.drawImage(battleStats.getWeapon().icon, 623, 147, null);
-		if(battleStats.getHelmet() != null)g.drawImage(battleStats.getHelmet().icon, 661, 109, null);
-		if(battleStats.getArmorn() != null)g.drawImage(battleStats.getArmorn().icon, 661, 147, null);
-		if(battleStats.getPants() != null)g.drawImage(battleStats.getPants().icon, 661, 185, null);
+		if(playerStats.getWeapon() != null)g.drawImage(playerStats.getWeapon().icon, 623, 147, null);
+		if(playerStats.getHelmet() != null)g.drawImage(playerStats.getHelmet().icon, 661, 109, null);
+		if(playerStats.getArmor() != null)g.drawImage(playerStats.getArmor().icon, 661, 147, null);
+		if(playerStats.getPants() != null)g.drawImage(playerStats.getPants().icon, 661, 185, null);
 
 	}
 }

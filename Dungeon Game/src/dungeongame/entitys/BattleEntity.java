@@ -2,19 +2,19 @@ package dungeongame.entitys;
 
 import java.awt.Point;
 
-import dungeongame.BattleStats;
 import dungeongame.RessourceManager;
 import dungeongame.basetypes.GameMap;
 import dungeongame.particles.DamageNumberParticle;
+import dungeongame.stats.DamageCalculator;
+import dungeongame.stats.Stats;
 
 public abstract class BattleEntity extends BaseEntity{
-	public BattleStats battleStats;
+	public Stats stats;
 	
 	public abstract void uponDeath();
 	
 	public BattleEntity(Point position, GameMap locationMap) {
 		super(position, locationMap);
-		battleStats = new BattleStats();
 	}
 
 	public void attack(Direction direction){
@@ -28,7 +28,7 @@ public abstract class BattleEntity extends BaseEntity{
 		if(target != null){
 			if(target instanceof BattleEntity){
 				BattleEntity battleTarget = (BattleEntity)target;
-				battleTarget.receiveDamage(battleStats.atk);
+				battleTarget.receiveDamage(DamageCalculator.calculateNormalAttack(stats, battleTarget.stats));
 				moving = true;
 				remainingFreezeTime = 0.5;
 			}
@@ -36,10 +36,9 @@ public abstract class BattleEntity extends BaseEntity{
 	}
 	
 	public void receiveDamage(int damage){
-		battleStats.dealDamage(damage);
+		stats.subtractHp(damage);
 		
-		int actualDamage = damage - battleStats.def;
-		if(actualDamage > 0)locationMap.particles.add(new DamageNumberParticle(actualDamage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) - (sprite.getHeight() / 4)));
-		else locationMap.particles.add(new DamageNumberParticle(0, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) - (sprite.getHeight() / 4)));
+		if ( damage > 0 )
+			locationMap.particles.add(new DamageNumberParticle(damage, (int) (x * RessourceManager.tileSize) + (sprite.getWidth() / 2), (int) (y * RessourceManager.tileSize) - (sprite.getHeight() / 4)));
 	}
 }

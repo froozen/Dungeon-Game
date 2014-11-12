@@ -86,7 +86,7 @@ public class DungeonMapState implements BaseState{
 		for(BaseEntity entity:activeMap.entitys){
 			if(entity instanceof BattleEntity){
 				BattleEntity battleEntity = (BattleEntity)entity;
-				if(battleEntity.battleStats.hp < 1){
+				if(battleEntity.stats.hp < 1){
 					removeList.add(battleEntity);
 				}
 			}

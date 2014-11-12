@@ -2,39 +2,24 @@ package dungeongame.entitys;
 
 import java.awt.Point;
 
-import dungeongame.BattleStats;
 import dungeongame.GameInput;
 import dungeongame.GameVariables;
 import dungeongame.basetypes.GameMap;
+import dungeongame.stats.HumanStats;
 
 public class Player extends BattleEntity{
-
-
 	public Player(Point position, GameMap locationMap){
 		super(position, locationMap);
 
 		if(GameVariables.playerBattleStats == null){
-			battleStats = new BattleStats();
-			battleStats.atk = 15;
-			battleStats.def = 5;
+			// TODO Generate somewhere else
+			stats = new HumanStats ();
+			stats.hp = stats.maxHp = 200;
+			stats.mp = stats.maxMp = 150;
 			
-			battleStats.maxHp = 200;
-			battleStats.hp = battleStats.maxHp;
-			battleStats.maxMp = 150;
-			battleStats.mp = battleStats.maxMp;
-			
-			battleStats.expToNextLevel = 15;
-			battleStats.lastExpToNextLevel = battleStats.expToNextLevel;
-			
-			battleStats.str = 4;
-			battleStats.mag = 4;
-			battleStats.dex = 4;
-			battleStats.luk = 4;
-			
-			GameVariables.playerBattleStats = battleStats;
-			battleStats.dealDamage(50);
+			GameVariables.playerBattleStats = (HumanStats)stats;
 		}
-		else battleStats = GameVariables.playerBattleStats;
+		else stats = GameVariables.playerBattleStats;
 		
 		spriteLocation = "sprites.player";
 	}

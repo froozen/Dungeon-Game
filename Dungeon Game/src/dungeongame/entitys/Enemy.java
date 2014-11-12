@@ -2,10 +2,9 @@ package dungeongame.entitys;
 
 import java.awt.Point;
 
-import dungeongame.BattleStats;
-import dungeongame.GameVariables;
 import dungeongame.basetypes.DungeonMap;
 import dungeongame.basetypes.GameMap;
+import dungeongame.stats.MonsterStats;
 
 public class Enemy extends BattleEntity{
 
@@ -13,13 +12,13 @@ public class Enemy extends BattleEntity{
 		super(position, location);
 		spriteLocation = "sprites.enemy";
 		
-		battleStats = new BattleStats();
-		battleStats.atk = 10;
-		battleStats.def = 3;
-		battleStats.maxHp = 30;
-		battleStats.hp = 30;
-		battleStats.maxMp = 15;
-		battleStats.mp = 15;
+		MonsterStats ownStats = new MonsterStats();
+		ownStats.atk = 10;
+		ownStats.def = 3;
+		ownStats.hp = ownStats.maxHp = 30;
+		ownStats.mp = ownStats.maxMp = 15;
+		
+		stats = ownStats;
 	}
 	
 	public void initializeMovement() {
@@ -58,7 +57,8 @@ public class Enemy extends BattleEntity{
 	}
 
 	public void uponDeath() {
-		GameVariables.playerBattleStats.gainExp(20);
+		// TODO Implement leveling
+		// GameVariables.playerBattleStats.gainExp(20);
 		((DungeonMap) locationMap).spawnEnemy();
 	}
 

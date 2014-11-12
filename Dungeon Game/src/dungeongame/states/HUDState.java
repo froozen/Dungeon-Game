@@ -18,8 +18,9 @@ public class HUDState implements BaseState, BaseMenu{
 		
 		g.drawImage(RessourceManager.getImage("hud.overlay"), 0, 0, null);
 		
-		BufferedImage level = RessourceManager.getFontifiedText("LV:" + GameVariables.playerBattleStats.level, "outline");
-		g.drawImage(level, 5, 5, null);
+		// TODO Implement leveling
+//		BufferedImage level = RessourceManager.getFontifiedText("LV:" + GameVariables.playerBattleStats.level, "outline");
+//		g.drawImage(level, 5, 5, null);
 	}
 
 	//UNUSED
@@ -51,9 +52,9 @@ public class HUDState implements BaseState, BaseMenu{
 	}
 	
 	private void renderPlayerExpBar(Graphics g){
-		BufferedImage expBar = RessourceManager.getImage("hud.expbar");
-		int expBarOffset = expBar.getWidth() - ((int) (expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / (double)GameVariables.playerBattleStats.lastExpToNextLevel)));
+//		BufferedImage expBar = RessourceManager.getImage("hud.expbar");
+//		int expBarOffset = expBar.getWidth() - ((int) (expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / (double)GameVariables.playerBattleStats.lastExpToNextLevel)));
 		
-		g.drawImage(expBar, 2 - expBarOffset, 32, null);
+//		g.drawImage(expBar, 2 - expBarOffset, 32, null);
 	}
 }

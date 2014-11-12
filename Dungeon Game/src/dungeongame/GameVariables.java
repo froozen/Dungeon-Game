@@ -1,7 +1,9 @@
 package dungeongame;
 
+import dungeongame.stats.HumanStats;
+
 public class GameVariables {
-	public static BattleStats playerBattleStats;
+	public static HumanStats playerBattleStats;
 	public static double timeSinceLastFrame;
 	
 	private static long lastTime;
