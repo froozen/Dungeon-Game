@@ -74,14 +74,22 @@ public class InventoryMenu implements BaseMenu{
 	private void renderPlayerStats(Graphics g){
 		BufferedImage statsImage;
 
-		// TODO Update stats display
 		g.drawImage(RessourceManager.getFontifiedText("ATK:", "standard"), 550, 122, null);
 		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getAtk(), "standard");
 		g.drawImage(statsImage, 617 - statsImage.getWidth(), 122, null);
-
-		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 550, 134, null);
-		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getDef(), "standard");
+		
+		g.drawImage(RessourceManager.getFontifiedText("MATK:", "standard"), 550, 134, null);
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getMAtk(), "standard");
 		g.drawImage(statsImage, 617 - statsImage.getWidth(), 134, null);
+
+		g.drawImage(RessourceManager.getFontifiedText("DEF:", "standard"), 550, 146, null);
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getDef(), "standard");
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 146, null);
+		
+		g.drawImage(RessourceManager.getFontifiedText("MDEF:", "standard"), 550, 158, null);
+		statsImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.getMDef(), "standard");
+		g.drawImage(statsImage, 617 - statsImage.getWidth(), 158, null);
+		
 	}
 
 	private void renderPlayerBars(Graphics g){
