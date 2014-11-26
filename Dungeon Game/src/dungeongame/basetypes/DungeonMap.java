@@ -12,12 +12,14 @@ import java.util.Random;
 import dungeongame.RessourceManager;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.Enemy;
+import dungeongame.entitys.NonTileObject;
 import dungeongame.entitys.Player;
 import dungeongame.particles.BaseParticle;
 
 public class DungeonMap extends GameMap{
 	public ArrayList<DungeonRoom> rooms;
 	public ArrayList<Point> links;
+	private boolean[][] occupiedTiles;
 	
 	private BufferedImage background, tintedBackground;
 	
@@ -25,6 +27,11 @@ public class DungeonMap extends GameMap{
 
 	public DungeonMap(int width, int height) {
 		super(width, height);
+		occupiedTiles = new boolean[width][height];
+		for(int x = 0; x < width; x++)
+			for(int y = 0; y < height; y++)
+				// TODO Fix occupied
+				occupiedTiles[x][y] = false;
 
 		boolean validLayout = true;
 		while(validLayout){
@@ -91,7 +98,7 @@ public class DungeonMap extends GameMap{
 		g.drawImage(tintedBackground, 0, 0, null );
 
 		if ( targetRoom == null ){
-			Point playerPosition = getPlayer().position;
+			Point playerPosition = getPlayer().getPosition();
 
 			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x][playerPosition.y]), playerPosition.x * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
 //			g.drawImage(RessourceManager.getTile(tiles[playerPosition.x - 1][playerPosition.y]), (playerPosition.x - 1) * RessourceManager.tileSize, playerPosition.y * RessourceManager.tileSize, null);
@@ -103,7 +110,7 @@ public class DungeonMap extends GameMap{
 		}
 		else
 		{
-			ArrayList<BaseEntity> targetEntitys = getEntitysIn(targetRoom);
+			ArrayList<NonTileObject> targetNonTileObjects = getNonTileObjectsIn(targetRoom);
 			Rectangle targetRectangle = new Rectangle(targetRoom.space.x - 1, targetRoom.space.y -1, targetRoom.space.width + 2, targetRoom.space.height +2);
 
 			for(int x = targetRectangle.x; x < targetRectangle.x + targetRectangle.width; x++){
@@ -112,11 +119,16 @@ public class DungeonMap extends GameMap{
 				}
 			}
 
-			for(BaseEntity e:targetEntitys)
-				e.drawMe(g);
+			for(NonTileObject nto:targetNonTileObjects)
+				nto.drawMe(g);
 		}
 
 		for(BaseParticle particle:particles)particle.drawMe(g);
+	}
+	
+	public boolean isOccupied(Point position){
+		if(occupiedTiles[position.x][position.y])return true;
+		else return super.isOccupied(position);
 	}
 
 	public boolean roomsContain(Point point){
@@ -137,18 +149,18 @@ public class DungeonMap extends GameMap{
 
 	public DungeonRoom getRoomThatContains(BaseEntity  e){
 		for(DungeonRoom room:rooms){
-			if(room.space.contains(e.position))return room;
+			if(room.space.contains(e.getPosition()))return room;
 		}
 		return null;
 	}
 
-	public ArrayList<BaseEntity> getEntitysIn(DungeonRoom room){
+	public ArrayList<NonTileObject> getNonTileObjectsIn(DungeonRoom room){
 		if(room == null)return null;
 
-		ArrayList<BaseEntity> returnList = new ArrayList<BaseEntity>();
+		ArrayList<NonTileObject> returnList = new ArrayList<NonTileObject>();
 
-		for(BaseEntity e:entitys){
-			if(room.space.contains(e.position))returnList.add(e);
+		for(NonTileObject nto:nonTileObjects){
+			if(room.space.contains(nto.getPosition()))returnList.add(nto);
 		}
 
 		if(returnList.size() > 0)return returnList;
@@ -303,7 +315,7 @@ public class DungeonMap extends GameMap{
 				if(!roomsContain(new Point(x, y))){
 					if(!links.contains(new Point(x, y))){
 						tiles[x][y] = 2;
-						occupied[x][y] = true;
+						occupiedTiles[x][y] = true;
 					}
 				}
 			}
@@ -333,18 +345,18 @@ public class DungeonMap extends GameMap{
 		DungeonRoom playerSpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		Point playerSpawnPoint = new Point(playerSpawnRoom.space.x + random.nextInt(playerSpawnRoom.space.width), playerSpawnRoom.space.y + random.nextInt(playerSpawnRoom.space.height));
 		Player player = new Player(playerSpawnPoint, this);
-		entitys.add(player);
+		nonTileObjects.add(player);
 
 		DungeonRoom enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		while(enemySpawnRoom == playerSpawnRoom)enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		Point enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
 
-		while(occupied[enemySpawnPoint.x][enemySpawnPoint.y]){
+		while(isOccupied(enemySpawnPoint)){
 			enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
 		}
 
 		Enemy enemy = new Enemy(enemySpawnPoint, this);
-		entitys.add(enemy);
+		nonTileObjects.add(enemy);
 	}
 	
 	public void spawnEnemy()
@@ -354,11 +366,11 @@ public class DungeonMap extends GameMap{
 		DungeonRoom enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
 		Point enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
 
-		while(occupied[enemySpawnPoint.x][enemySpawnPoint.y]){
+		while(isOccupied(enemySpawnPoint)){
 			enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
 		}
 
 		Enemy enemy = new Enemy(enemySpawnPoint, this);
-		entitys.add(enemy);
+		nonTileObjects.add(enemy);
 	}
 }

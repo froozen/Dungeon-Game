@@ -21,7 +21,7 @@ public class Enemy extends BattleEntity{
 		stats = ownStats;
 	}
 	
-	public void initializeMovement() {
+	public void update() {
 		Player prey = locationMap.getPlayer();
 		
 		if(prey != null){
