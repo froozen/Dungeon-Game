@@ -8,11 +8,11 @@ import dungeongame.GameVariables;
 import dungeongame.RessourceManager;
 import dungeongame.basetypes.GameMap;
 
-public abstract class BaseEntity {
+public abstract class BaseEntity implements NonTileObject {
 	final double speed = 2.5;
 
-	public Point position;
-	public double x, y;
+	protected Point position;
+	protected double x, y;
 	public String spriteLocation;
 	public BufferedImage sprite;
 	public GameMap locationMap;
@@ -22,8 +22,6 @@ public abstract class BaseEntity {
 
 	protected int lastCyclePhase;
 	protected double remainingFreezeTime;
-
-	public abstract void initializeMovement();
 
 	public BaseEntity(Point position, GameMap locationMap){
 		this.locationMap = locationMap;
@@ -35,15 +33,11 @@ public abstract class BaseEntity {
 		cyclePhase = 0;
 		lastCyclePhase = 2;
 		moving = false;
-
-		locationMap.occupied[position.x][position.y] = true;
 	}
 
 	public enum Direction{
 		DOWN, RIGHT, UP, LEFT
 	}
-
-	
 
 	public void drawMe(Graphics g){
 		loadSprite();
@@ -52,59 +46,47 @@ public abstract class BaseEntity {
 
 	public void moveDirection(Direction movementDirection){
 		direction = movementDirection;
+		Point nextPosition = new Point(position);
 
 		if(movementDirection == Direction.RIGHT){
-			position.x++;
+			nextPosition.x++;
 
-			if(position.x > -1 && position.x < locationMap.width){
-				if(!locationMap.occupied[position.x][position.y]){
+			if(nextPosition.x > -1 && nextPosition.x < locationMap.width){
+				if(!locationMap.isOccupied(nextPosition)){
+					position = nextPosition;
 					moving = true;
-					locationMap.occupied[position.x - 1][position.y] = false;
-					locationMap.occupied[position.x][position.y] = true;
 				}
-				else position.x--;
 			}
-			else position.x--;
-
 		}
 		else if(movementDirection == Direction.LEFT){
-			position.x--;
+			nextPosition.x--;
 
-			if(position.x > -1 && position.x < locationMap.width){
-				if(!locationMap.occupied[position.x][position.y]){
+			if(nextPosition.x > -1 && nextPosition.x < locationMap.width){
+				if(!locationMap.isOccupied(nextPosition)){
+					position = nextPosition;
 					moving = true;
-					locationMap.occupied[position.x + 1][position.y] = false;
-					locationMap.occupied[position.x][position.y] = true;
 				}
-				else position.x++;
 			}
-			else position.x++;
 		}
 		else if(movementDirection == Direction.DOWN){
-			position.y++;
+			nextPosition.y++;
 
-			if(position.y > -1 && position.y < locationMap.height){
-				if(!locationMap.occupied[position.x][position.y]){
+			if(nextPosition.y > -1 && nextPosition.y < locationMap.height){
+				if(!locationMap.isOccupied(nextPosition)){
+					position = nextPosition;
 					moving = true;
-					locationMap.occupied[position.x][position.y - 1] = false;
-					locationMap.occupied[position.x][position.y] = true;
 				}
-				else position.y--;
 			}
-			else position.y--;
 		}
 		else if(movementDirection == Direction.UP){
-			position.y--;
+			nextPosition.y--;
 
-			if(position.y > -1 && position.y < locationMap.height){
-				if(!locationMap.occupied[position.x][position.y]){
+			if(nextPosition.y > -1 && nextPosition.y < locationMap.height){
+				if(!locationMap.isOccupied(nextPosition)){
+					position = nextPosition;
 					moving = true;
-					locationMap.occupied[position.x][position.y + 1] = false;
-					locationMap.occupied[position.x][position.y] = true;
 				}
-				else position.y++;
 			}
-			else position.y++;
 		}
 	}
 
@@ -118,7 +100,7 @@ public abstract class BaseEntity {
 				if(y>position.y){
 					y -= GameVariables.timeSinceLastFrame * speed;
 				}
-				if(!(y>position.y)){
+				else {
 					moving = false;
 					y = position.y;
 				}
@@ -127,7 +109,7 @@ public abstract class BaseEntity {
 				if(x>position.x){
 					x -=GameVariables.timeSinceLastFrame * speed;
 				}
-				if(!(x>position.x)){
+				else {
 					moving = false;
 					x = position.x;
 				}
@@ -136,7 +118,7 @@ public abstract class BaseEntity {
 				if(y<position.y){
 					y +=GameVariables.timeSinceLastFrame * speed;
 				}
-				if(!(y<position.y)){
+				else {
 					moving = false;
 					y = position.y;
 				}
@@ -145,7 +127,7 @@ public abstract class BaseEntity {
 				if(x<position.x){
 					x +=GameVariables.timeSinceLastFrame * speed;
 				}
-				if(!(x<position.x)){
+				else {
 					moving = false;
 					x = position.x;
 				}
@@ -180,5 +162,21 @@ public abstract class BaseEntity {
 
 			sprite = RessourceManager.getCharacterSprite(spriteLocation, direction, cyclePhase);
 		}
+	}
+
+	public Point getPosition(){
+		return position;
+	}
+	
+	public boolean isSolid(){
+		return true;
+	}
+	
+	public double getX(){
+		return x;
+	}
+	
+	public double getY(){
+		return y;
 	}
 }

@@ -24,7 +24,7 @@ public class Player extends BattleEntity{
 		spriteLocation = "sprites.player";
 	}
 
-	public void initializeMovement() {
+	public void update() {
 		if(!moving){
 			if(GameInput.wasKeyDown("Up"))moveDirection(Direction.UP);
 			else if(GameInput.wasKeyDown("Left")) moveDirection(Direction.LEFT);

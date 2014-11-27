@@ -12,6 +12,7 @@ import dungeongame.GameStateManager.GameStateFocus;
 import dungeongame.basetypes.DungeonMap;
 import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.BattleEntity;
+import dungeongame.entitys.NonTileObject;
 import dungeongame.entitys.Player;
 import dungeongame.menus.InventoryMenu;
 
@@ -30,8 +31,8 @@ public class DungeonMapState implements BaseState{
 	public void computeNextFrame() {
 		initializeMovements();
 		updateScreenPositions();
-		sortEntitys();
-		removeEntities();
+		sortNonTileObjects();
+		cleanNonTileObjects();
 		
 		activeMap.updateParticles();
 		
@@ -51,19 +52,20 @@ public class DungeonMapState implements BaseState{
 	private void initializeMovements(){
 		boolean anythingMoving = false;
 
-		for(BaseEntity entity:activeMap.entitys){
-			if(entity.moving)anythingMoving = true;
+		for(NonTileObject nto:activeMap.nonTileObjects){
+			if(nto instanceof BaseEntity)
+				if(((BaseEntity)nto).moving)anythingMoving = true;
 		}
 
 		if(!anythingMoving){
-			player.initializeMovement();
+			player.update();
 
 			if(player.moving){
-				ArrayList<BaseEntity> valuableEntitys = activeMap.getEntitysIn(activeMap.getRoomThatContains(player));
-				if(valuableEntitys != null){
-					for(BaseEntity entity:valuableEntitys){
-						if(entity != player){
-							entity.initializeMovement();
+				ArrayList<NonTileObject> relevantNonTileObjects = activeMap.getNonTileObjectsIn(activeMap.getRoomThatContains(player));
+				if(relevantNonTileObjects != null){
+					for(NonTileObject nto:relevantNonTileObjects){
+						if(nto != player){
+							nto.update();
 						}
 					}
 				}
@@ -72,30 +74,32 @@ public class DungeonMapState implements BaseState{
 	}
 
 	private void updateScreenPositions(){
-		ArrayList<BaseEntity> valuableEntitys = activeMap.getEntitysIn(activeMap.getRoomThatContains(player));
-		if(valuableEntitys != null){
-			for(BaseEntity entity:valuableEntitys){
-					entity.computeNextPosition();
+		ArrayList<NonTileObject> relevantNonTileObjects = activeMap.getNonTileObjectsIn(activeMap.getRoomThatContains(player));
+		if(relevantNonTileObjects != null){
+			for(NonTileObject nto:relevantNonTileObjects){
+				if(nto instanceof BaseEntity){
+					((BaseEntity)nto).computeNextPosition();
+				}
 			}
 		}
 		else player.computeNextPosition();
 	}
 	
-	private void removeEntities(){
-		ArrayList<BattleEntity> removeList = new ArrayList<BattleEntity>();
-		for(BaseEntity entity:activeMap.entitys){
-			if(entity instanceof BattleEntity){
-				BattleEntity battleEntity = (BattleEntity)entity;
+	private void cleanNonTileObjects(){
+		ArrayList<NonTileObject> removeList = new ArrayList<NonTileObject>();
+		for(NonTileObject nto:activeMap.nonTileObjects){
+			if(nto instanceof BattleEntity){
+				BattleEntity battleEntity = (BattleEntity)nto;
 				if(battleEntity.stats.hp < 1){
 					removeList.add(battleEntity);
 				}
 			}
 		}
 
-		for(BattleEntity entity:removeList){
-			if(activeMap.occupied[entity.position.x][entity.position.y])activeMap.occupied[entity.position.x][entity.position.y] = false;
-			entity.uponDeath();
-			activeMap.entitys.remove(entity);
+		for(NonTileObject nto:removeList){
+			if(nto instanceof BattleEntity)
+				((BattleEntity)nto).uponDeath();
+			activeMap.nonTileObjects.remove(nto);
 		}
 	}
 	
@@ -109,10 +113,10 @@ public class DungeonMapState implements BaseState{
 		}
 	}
 	
-	private void sortEntitys(){
-		Collections.sort(activeMap.entitys, new Comparator<BaseEntity>() {
-			public int compare(BaseEntity e1, BaseEntity e2){
-				return Double.compare(e1.y, e2.y);
+	private void sortNonTileObjects(){
+		Collections.sort(activeMap.nonTileObjects, new Comparator<NonTileObject>() {
+			public int compare(NonTileObject nto1, NonTileObject nto2){
+				return Double.compare(nto1.getY(), nto2.getY());
 			}
 		});
 	}
