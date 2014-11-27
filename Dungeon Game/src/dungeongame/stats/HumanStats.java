@@ -9,12 +9,13 @@ import dungeongame.basetypes.items.EquipmentItem.EquipmentType;
 public class HumanStats extends Stats {
 	private EquipmentItem weapon, helmet, armor, pants;
 
-	private static int baseAtk = 5;
-	private static int baseDef = 5;
-	private static int baseMAtk = 5;
-	private static int baseMDef = 5;
-	private static int level = 1;
-	private static int expToNextLevel = 10, lastExpToNextLevel = 10;
+	private int baseAtk = 5;
+	private int baseDef = 5;
+	private int baseMAtk = 5;
+	private int baseMDef = 5;
+
+	public int level = 1;
+	public int expToNextLevel = 10, lastExpToNextLevel = 10;
 
 	public int getAtk () {
 		int atk = baseAtk;
@@ -32,11 +33,6 @@ public class HumanStats extends Stats {
 		return def;
 	}
 		
-	public int getLevel()
-	{
-		return level;
-	}
-
 	public int getMAtk() {
 		int mAtk = baseMAtk;
 		return mAtk;
@@ -47,7 +43,7 @@ public class HumanStats extends Stats {
 		return mDef;
 	}
 	
-	public static void levelUp()
+	public void levelUp()
 	{
 		level++;
 		Random r = new Random();
@@ -58,7 +54,7 @@ public class HumanStats extends Stats {
 		System.out.println("Lvl up, new level: " + level);
 	}
 	
-	public static void gainExp(int amount){
+	public void gainExp(int amount){
 		while(amount > 0){
 			if(amount >= expToNextLevel){
 				amount -= expToNextLevel;
@@ -72,7 +68,7 @@ public class HumanStats extends Stats {
 		}
 	}
 	
-	private static void determineNextExpToNextLevel(){
+	private void determineNextExpToNextLevel(){
 		expToNextLevel = (int) (lastExpToNextLevel * 1.25);
 		lastExpToNextLevel = expToNextLevel;
 		System.out.println("Exp to Next Level: " + expToNextLevel);
