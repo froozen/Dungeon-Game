@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import dungeongame.basetypes.DungeonMap;
 import dungeongame.basetypes.GameMap;
+import dungeongame.stats.HumanStats;
 import dungeongame.stats.MonsterStats;
 
 public class Enemy extends BattleEntity{
@@ -57,9 +58,7 @@ public class Enemy extends BattleEntity{
 	}
 
 	public void uponDeath() {
-		// TODO Implement leveling
-		// GameVariables.playerBattleStats.gainExp(20);
 		((DungeonMap) locationMap).spawnEnemy();
+		HumanStats.gainExp(5);
 	}
-
 }
