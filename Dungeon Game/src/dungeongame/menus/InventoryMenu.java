@@ -111,25 +111,25 @@ public class InventoryMenu implements BaseMenu{
 		int mpTextX = 622 - (mpText.getWidth() / 2);
 		g.drawImage(mpText, mpTextX, 258, null);
 		
-//		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
-//
-//		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
-//		if(expRestWidth > 0){
-//			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
-//			g.drawImage(expBar, 552, 282, null);
-//		}
+		BufferedImage expBar = RessourceManager.getImage("ui.inventory.expbar");
+
+		int expRestWidth = (int)(expBar.getWidth() * (((double)(GameVariables.playerBattleStats.lastExpToNextLevel - GameVariables.playerBattleStats.expToNextLevel)) / ((double)GameVariables.playerBattleStats.lastExpToNextLevel)));
+		if(expRestWidth > 0){
+			expBar = expBar.getSubimage(expBar.getWidth() - expRestWidth, 0, expRestWidth, expBar.getHeight());
+			g.drawImage(expBar, 552, 282, null);
+		}
 	}
 
 	private void renderPlayerLeveling(Graphics g){
-//		BufferedImage levelImage;
-//
-//		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 295, null);
-//		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.level, "standard");
-//		g.drawImage(levelImage, 610 - levelImage.getWidth(), 295, null);
-//
-//		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 295, null);
-//		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
-//		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
+		BufferedImage levelImage;
+
+		g.drawImage(RessourceManager.getFontifiedText("Level:", "standard"), 550, 295, null);
+		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.level, "standard");
+		g.drawImage(levelImage, 610 - levelImage.getWidth(), 295, null);
+
+		g.drawImage(RessourceManager.getFontifiedText("Next:", "standard"), 620, 295, null);
+		levelImage = RessourceManager.getFontifiedText("" + GameVariables.playerBattleStats.expToNextLevel, "standard");
+		g.drawImage(levelImage, 694 - levelImage.getWidth(), 295, null);
 	}
 
 	private void renderSelectedItemInformation(Graphics g){		
