@@ -14,6 +14,7 @@ import dungeongame.entitys.BaseEntity;
 import dungeongame.entitys.Enemy;
 import dungeongame.entitys.NonTileObject;
 import dungeongame.entitys.Player;
+import dungeongame.entitys.Stairs;
 import dungeongame.particles.BaseParticle;
 
 public class DungeonMap extends GameMap{
@@ -346,17 +347,19 @@ public class DungeonMap extends GameMap{
 		Point playerSpawnPoint = new Point(playerSpawnRoom.space.x + random.nextInt(playerSpawnRoom.space.width), playerSpawnRoom.space.y + random.nextInt(playerSpawnRoom.space.height));
 		Player player = new Player(playerSpawnPoint, this);
 		nonTileObjects.add(player);
-
-		DungeonRoom enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
-		while(enemySpawnRoom == playerSpawnRoom)enemySpawnRoom = rooms.get(random.nextInt(rooms.size()));
-		Point enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
-
-		while(isOccupied(enemySpawnPoint)){
-			enemySpawnPoint = new Point(enemySpawnRoom.space.x + random.nextInt(enemySpawnRoom.space.width), enemySpawnRoom.space.y + random.nextInt(enemySpawnRoom.space.height));
-		}
-
-		Enemy enemy = new Enemy(enemySpawnPoint, this);
-		nonTileObjects.add(enemy);
+		
+		spawnStairs();	
+		spawnEnemy();
+	}
+	
+	public void spawnStairs()
+	{
+		Random random = new Random();
+		
+		DungeonRoom stairSpawnRoom = rooms.get(random.nextInt(rooms.size()));
+		Point stairSpawnPoint = new Point(stairSpawnRoom.space.x + random.nextInt(stairSpawnRoom.space.width), stairSpawnRoom.space.y + random.nextInt(stairSpawnRoom.space.height));
+		Stairs stair = new Stairs(stairSpawnPoint, this);
+		nonTileObjects.add(stair);
 	}
 	
 	public void spawnEnemy()
